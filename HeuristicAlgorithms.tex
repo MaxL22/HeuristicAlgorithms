@@ -587,6 +587,7 @@
 	
 	\subsection*{Interlude 5: The relations between problems}
 	\addcontentsline{toc}{subsection}{Interlude 5: The relations between problems}
+	\label{I5}
 	Each instance of the \textbf{MCP} is \textbf{equivalent} to an instance of the \textbf{MISP}:
 	\begin{enumerate}
 		\item start from the MCP instance, that is graph $G = (V , E)$ \\
@@ -686,7 +687,7 @@
 	\begin{itemize}
 		\item an \textbf{undirected graph} $G = (V , E )$ with a \textbf{root vertex} $r \in V$
 		\item a function $c : \, E \rightarrow \mathbb{N}$ that provides the \textbf{cost of each edge}
-		\item a function $w : \, V \rightarrow \mathbb{N}$ that provides the\textbf{weight of each vertex}
+		\item a function $w : \, V \rightarrow \mathbb{N}$ that provides the \textbf{weight of each vertex}
 		\item a number $W \in \mathbb{N}$ that is the \textbf{subtree appended to the root} (branch), i.e. capacity of each subtree
 	\end{itemize}
 	select a \textbf{spanning tree} of \textbf{minimum cost} such that each \textbf{branch respects the capacity}.\\
@@ -815,7 +816,7 @@
 	The \textbf{CMSTP} and the \textbf{VRP} share an interesting complication: \textbf{different definitions of the ground set} $B$ are possible and natural
 	\begin{itemize}
 		\item the description as a \textbf{set of edges/arcs} looks preferable to \textbf{manage the objective}
-		\item the description as a \textbf{set of pairs (vertex,tree)/(node/circuit)} looks better to \textbf{generate optimal solutions and to deal with feasibility}
+		\item the description as a \textbf{set of pairs (vertex,tree)/(node,circuit)} looks better to \textbf{generate optimal solutions and to deal with feasibility}
 	\end{itemize}
 	
 	Which description should be adopted?
@@ -937,7 +938,7 @@
 	\newpage
 	
 	\subsection{Problem transformations and reductions}
-	Problems can be \textbf{transformed} into other problems (interlude 5). A \textbf{relation} among problems allows to design algorithms: 
+	Problems can be \textbf{transformed} into other problems (\hyperref[I5]{Interlude 5}). A \textbf{relation} among problems allows to design algorithms: 
 	\begin{itemize}
 		\item by \textbf{transformation}: 
 		\begin{enumerate}
@@ -1056,11 +1057,11 @@
 		$$ \delta_v \geq k+1 \implies x_t := x_{t-1} \cup \left\{v\right\} $$
 		\item \textbf{update} $k_t := k_0 − |x_t|$
 		\item \textbf{remove} the \textbf{vertices} of \textbf{zero degree}, those \textbf{of} $x$ and the \textbf{covered edges}
-		$$ V := \left\{v \in V : \, \delta_v > 0\right\} \setminus x_t \;\;\;\;\; E :? \left\{e \in E : \, e \cap x_t = \emptyset \right\} $$
+		$$ V := \left\{v \in V : \, \delta_v > 0\right\} \setminus x_t \;\;\;\;\; E := \left\{e \in E : \, e \cap x_t = \emptyset \right\} $$
 		\item if $|E| > k_t^2$ there is \textbf{no feasible solution} ($k_t$ vertices are not enough)
 		\item if $|E| \leq k_t^2 \implies |V| \leq 2k_t^2$; \textbf{apply} the \textbf{exhaustive} algorithm
 	\end{itemize}
-	The \textbf{complexity} is $T(n.k) \in \Theta \left(n + m + 2^{2k^2}k^2 \right)$ (the last part is the one of the exhaustive algorithm, good if $k$ is small).\\
+	The \textbf{complexity} is $T(n,k) \in \Theta \left(n + m + 2^{2k^2}k^2 \right)$ (the last part is the one of the exhaustive algorithm, good if $k$ is small).\\
 	
 	\textbf{Essentially:} it chooses the nodes with the most edges connected to them, removes them (and the nodes left with no edges), decreases the number of edges "required" to be "chosen" and starts again.\\
 	
@@ -1213,13 +1214,13 @@
 	\begin{itemize}
 		\item \textbf{Absolute difference}
 		$$ \tilde{\delta}_A (i) = |f_A(I) - f^\ast (i)| \geq 0 $$
-		used rarely and only when the objective is a pure number. This yields a small error an small instances and big numbers on big instances so it could be not significant.
+		used rarely and only when the objective is a pure number. This yields a small error an small instances and big numbers on big instances so it could be not significant.\\
 		\item \textbf{Relative difference}
 		$$ \delta_A (i) = \frac{|f_A (i) - f^\ast (i)|}{f^\ast (i)} \geq 0$$
-		frequent in experimental analysis (usually as a percent ratio).
+		frequent in experimental analysis (usually as a percent ratio).\\
 		\item \textbf{Approximation ratio}
 		$$ \rho_A (i) = \max \left[\frac{f_A(i)}{f^\ast(i)}, \, \frac{f^\ast (i)}{f_A (i)}\right] \geq 1 $$
-		frequent in theoretical analysis: the first form is used for minimization problems, the second one for maximization ones. The formula is done this way to represent both problems with a single expression.
+		frequent in theoretical analysis: the first form is used for minimization problems, the second one for maximization ones. The formula is done this way to represent both problems with a single expression.\\
 	\end{itemize}
 	
 	\newpage
@@ -1692,7 +1693,7 @@
 	The correct family of interpolating functions can be suggested
 	\begin{itemize}
 		\item by a \textbf{theoretical analysis} (studying the algorithm)
-		\item by \textbf{graphical manipulations} ()
+		\item by \textbf{graphical manipulations}
 	\end{itemize}
 	(Linear interpolation is usually the right tool).\\
 	
