@@ -2537,7 +2537,7 @@
 	\textbf{Strong exchange axiom:}
 	$$ 
 	\begin{cases}
-		x \in F, y \in B_F & \text{ such that } x \subseteq y \\
+		x \in F, y \in B_F & \text{ such that } x \subset y \\
 		i \in B \setminus y & \text{ such that } x \cup \left\{i\right\} \in F
 	\end{cases}
 	\implies \exists j \in y \setminus x: \, 
@@ -2689,7 +2689,7 @@
 	It is easy to prove that
 	\begin{itemize}
 		\item \textbf{the sum of the two solution values overestimates the optimum}
-		$$ f(x) + f(x') = \sum_{\tau = 1}^{t} \phi_{i^{(\tau)}} \leq f^\ast $$
+		$$ f(x) + f(x') = \sum_{\tau = 1}^{t} \phi_{i^{(\tau)}} \geq f^\ast $$
 		This sum essentially represents a solution for a "bigger knapsack" (it exceeds the capacity), so it will obviously be better (upper bound).\\
 		
 		\item \textbf{the best of the two solution values is at least half their sum}
@@ -2868,7 +2868,7 @@
 		\item The \textbf{occupied volume} is $> V/2$ for \textbf{all used containers}, possibly except for the last one (if a second half-empty container existed, its objects would have been assigned to the first, it would be a contradiction).\\
 		
 		\item The \textbf{total volume exceeds} that of the $f_A − 1$ "saturated" containers
-		$$ \sum_{i \in O} v_i > (f_A - 1) V / 2 $$
+		$$ \sum_{i \in O} v_i > (f_A - 1)\frac{V}{2} $$
 		This means that the total volume is more than $f_A - 1$ (if the last is not more than half full) times $V/2$ (lower bound).\\
 		Which implies $(fA − 1) < 2/V \sum_{i \in O} v_i \leq 2f^\ast \implies f_A \leq 2f^\ast$. Our solution is less than the volume of the "saturated" containers expressed before, which in turn is smaller than the optimal solution, refactor the equation and we get the last part, our solution is less than twice the optimum $+1$.\\
 		The analysis can be improved to 1.7.\\
@@ -3119,7 +3119,7 @@
 		It chooses the minimum distance among the minimum distances of each node from the circuit.
 		
 		\item \textbf{Delete criteria:} select the \textbf{arc} ($s_i , s_{i+1}$) that \textbf{minimizes} $f$
-		$$ (s_i, s_{i+1}) = \arg \min_{s_i, s_{i+1} \in x} \left(c_{s_i, k} + c_{k, s_{i+1}} - c_{s_i, s_[i+1]}\right) $$
+		$$ (s_i, s_{i+1}) = \arg \min_{s_i, s_{i+1} \in x} \left(c_{s_i, k} + c_{k, s_{i+1}} - c_{s_i, s_{i+1}}\right) $$
 		The arc to break is the one that minimizes the objective function.
 		
 		\item If the circuit does not visit all nodes, go back to point 2; otherwise terminate
@@ -4221,7 +4221,7 @@
 	
 	\newpage
 	
-	\paragraph{Some variants of the Ant System}:
+	\paragraph{Some variants of the Ant System:}
 	\begin{itemize}
 		\item \textbf{MAX $-$ MIN Ant System:} imposes on the trail a limited range of values $[\tau_{min}; \tau_{max}]$, experimentally tuned.\\
 		
@@ -4303,7 +4303,7 @@
 	
 	Here the oblivion is restricted by the minimum threshold.\\
 	
-	The trail must always be larger than the first term and it means that the trail must not decrease to zero too fast, otherwise there could be a premature convergence, but it's limit must be finite, so it must not be too slow.\\ 
+	The trail must always be larger than the first term and it means that the trail must not decrease to zero too fast, otherwise there could be a premature convergence, but its limit must be finite, so it must not be too slow.\\ 
 	
 	
 	\textbf{In practice}, all algorithms proposed so far in the literature
