@@ -193,10 +193,10 @@ Notice: $x'$ is used in the approximation proof, but doesn't need to be computed
 \newpage
 
 \paragraph{Inapproximability:} For an inapproximable problem, \textbf{approximated algorithms would be exact}.\\
-Consider this family of TSP instances on \textbf{complete graphs}:
+Consider this family of TSP instances on \textbf{complete graphs} $G = (N, A_0)$:
 \begin{itemize}
 	\item $c_{ij} = 0$ for $(i, j) \in A_0$
-	\item $c_{ij} = 1$ for $(i, j) \in  (N \times N) \ A_0$ (the \textbf{triangle inequality is violated}, the earlier approximation can't be applied anymore)
+	\item $c_{ij} = 1$ for $(i, j) \in  (N \times N) \setminus A_0$ (the \textbf{triangle inequality is violated}, the earlier approximation can't be applied anymore)
 \end{itemize}
 Essentially, some arcs are $0$, some $1$, triangle inequality cannot hold.\\
 
@@ -213,7 +213,7 @@ Assume that a \textbf{polynomial algorithm} $A$ provides a \textbf{guarantee} $\
 $$ f^\ast (i) \leq f_A (i) \leq \alpha f^\ast (i) \;\; \forall i \in I $$
 Then $f^\ast (\overline{i}) = 0 \Leftrightarrow f_A (\overline{i}) = 0$.\\
 
-Whenever the subgraph $G (N, A_0)$ has a Hamiltonian circuit, our algorithm $A$ necessarily finds it, solving an NP-complete problem in polynomial time (P $=$ NP, unlikely as this is of the millennium problems (I think)).\\
+Whenever the subgraph $G = (N, A_0)$ has a Hamiltonian circuit, our algorithm $A$ necessarily finds it, solving an $\np$-complete problem in polynomial time (and thus $\mathcal{P} = \np$, unlikely as this is of the millennium problems).\\
 
 \newpage
 
