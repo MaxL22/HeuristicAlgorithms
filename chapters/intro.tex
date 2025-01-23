@@ -1,0 +1,98 @@
+	\section*{Introduction}
+\addcontentsline{toc}{section}{\protect\numberline{}Introduction}
+
+The course aims to discuss the general aspects, the designing process of \textbf{Heuristic Algorithms}, along with methods to evaluate their performance.\\
+
+An \textit{algorithm} is a formal, deterministic procedure, with a correctness proof, while a \textbf{\textit{heuristic}} is an informal, open rule, made from a bunch of common sense arguments.\\
+An heuristic algorithm is an algorithm which does not guarantee a correct solution but can still be useful, provided that: 
+\begin{itemize}
+	\item it "costs" much less than a correct algorithm, in terms of time and space
+	\item it frequently gets "close" to the solution; this requires a definition of "closeness" and a distribution to express the frequency of "good enough" solutions
+\end{itemize}
+Every algorithm always has a correctness proof while a heuristic is a "good idea" about the solution of a problem, that can become a proof if enlarged but doesn't have to be, if you keep it a heuristic can provide a good result instead of a perfect one.\\
+
+Restrictions from now on: heuristic algorithms 
+\begin{itemize}
+	\item that apply to \textbf{Combinatorial Optimization} problems
+	\item that are \textbf{solution-based}
+\end{itemize}
+There are different type of problems, classified by the nature of the solution; the focus will be on a combination of \textbf{optimization} (looking for the optimal value) and \textbf{search} (looking for a subsystem assuming that value) problems.\\
+An optimization/search problem can be represented as: 
+$$ \opt f(x), \;\;\; x \in X $$
+Where: 
+\begin{itemize}
+	\item a solution $x$ describes each subsystem of the problem
+	\item the feasible solution space $X$, the set of subsystems which satisfy given conditions
+	\item the objective function $f: X \rightarrow \mathbb{R}$ quantitatively measures the quality of each subsystem (opt $\in \{$min, max$\}$)
+\end{itemize}
+
+\newpage
+
+The problem consists in determining:
+\begin{itemize}
+	\item \textbf{optimization:} the optimal value $f^\ast$ of the objective function: 
+	$$ f^\ast = \argopt_{x \in X} f(x) $$
+	\item \textbf{search:} at least one optimal solution, that is a subsystem: 
+	$$ x^\ast \in X^\ast = \argopt_{x \in X} f(x) = \left\{x^\ast \in X: \, f\left(x^\ast\right) = \opt_{x \in X} f(x) \right\}$$
+\end{itemize}
+Exact optimization is costly and not always required, or even desirable; a heuristic is preferable. \\
+
+\paragraph{Combinatorial Optimization:} a problem is a \textit{CO} problem when the feasible region $X$ is a finite set, it has a finite number of feasible solutions. \\
+
+This looks like a very restrictive assumption, however many problems can be reduced to finite set of solutions, e.g.: 
+\begin{itemize}
+	\item A problem can have a finite set of "interesting" solutions
+	\item Some continuous problems con be reduced to CO problems (e.g. linear programming, Maximum Flow, ...)
+	\item Continuous problems can be reduced to discrete ones by sampling (usually not very effective)
+	\item Ideas conceived for CO problems can be extended to other problems (often quite effective)
+\end{itemize}
+
+A problem is a CO problem when: 
+\begin{enumerate}
+	\item the number of feasible solutions is finite
+	\item the feasible region is $X \subseteq 2^B$ for a given finite ground set $B$, that is, the feasible solutions are all subsets of the ground set that satisfy suitable conditions
+\end{enumerate}
+The two definitions are equivalent. The latter allows a deeper analysis because $X$ is not simply enumerated and $X$ is defined in a compact way. The solution to a problem can be the subset of a finite set. \\
+
+\newpage
+
+\paragraph{Classification of CO problems:} solution-based heuristics consider solutions as subsets of the ground set: 
+\begin{itemize}
+	\item \textbf{constructive/destructive heuristics:} start from an extremely simple subset ($\emptyset$ or $B$) and add/remove elements until the solution is obtained; the set only grows/shrinks
+	\item \textbf{exchange heuristics:} start from a subset obtained in any way and exchange elements until the solution is found
+	\item \textbf{recombination heuristics:} start from a population of subsets obtained in any way, recombine them producing a new population, taking parts from each or some of them
+\end{itemize}
+Heuristic designers can creatively combine elements from different classes.\\
+
+There can be another distinction based on: 
+\begin{itemize}
+	\item the use of \textbf{randomization}: 
+	\begin{itemize}
+		\item purely deterministic heuristics
+		\item randomized heuristics, deterministic algorithms whose input includes pseudo-random numbers
+	\end{itemize}
+	\item the use of \textbf{memory}: heuristics whose input
+	\begin{itemize}
+		\item includes only the problem data 
+		\item also includes previously generated solutions
+	\end{itemize}
+\end{itemize}
+These are independent of the previous classification.\\
+Metaheuristics is the common name for heuristic algorithms with randomization and/or memory.\\
+
+\newpage
+
+\paragraph{Risks to beware of when:}
+\begin{itemize}
+	\item \textbf{reverential or trendy attitude}, that is choosing an algorithm based on the social context, instead of the problem
+	\item \textbf{magic attitude}, that is trusting a method on the basis of an analogy with physical and natural phenomena
+	\item \textbf{heuristic integralism}, that is using a heuristic for a problem which admits exact algorithms
+	\item \textbf{number crunching}, that is performing sophisticated and complex computations with unreliable numbers (that we don't understand)
+	\item \textbf{SUV attitude}, that is relying on hardware power
+	\item \textbf{overcomplication}, that is introducing redundant components and parameters, as if that could only improve the result
+	\item \textbf{overfitting}, that is adapting components and parameters of the algorithm to the specific dataset used in the experimental evaluation
+\end{itemize}
+
+% End of L1P1
+
+\newpage
