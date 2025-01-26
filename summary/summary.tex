@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{Heuristic Summary}
+\author{Massimo Perego}
+\date{}
+
+\begin{document}
+	
+	\maketitle
+	
+	\section*{Algorithm Analysis}
+	
+	\paragraph{Run Time Distribution Diagram RTD:} It shows the probability that the execution time is below a certain time $t$ (axis: runtime-$P$ of solving). To draw it: how many of the instances are solved in that amount of time or less?\\
+	
+	\paragraph{Scaling Diagram:} Describes the dependence of the time on the size (axis: instance size-execution time). Logarithmic scale for the time shows that the algorithm is exponential, both axis logarithmic can show that the algorithm is polynomial. To find the coefficient: choose two points and 
+	$$ \left(\frac{s_1}{s_2}\right)^\alpha \approx \frac{T_1}{T_2}$$
+	find $\alpha$, with $s_1, s_2$ and $T_1, T_2$ instance sizes and times respectively.\\
+	
+	\paragraph{Solution Quality Diagram SQD:} It plots the probability that the relative difference $\delta$ is smaller than a value $\alpha$, for each possible value of $\alpha$ (axis: relative solution quality-cumulative frequency, i.e., how many times do we get that solution quality or better). To draw it: sort the relative differences by non-decreasing values and determine how many of the instances are under each value.\\
+	
+	\paragraph{Boxplot diagram:} Show median ($n/2$th element), surrounded by the box formed by the lower and upper quartiles ($n/4$th element and $3n/4$th element, respectively). The whiskers go out to the end of the range in both directions.\\
+	
+	\paragraph{Dominance:} The dominance can be: 
+	\begin{itemize}
+		\item \textbf{Strict:} a boxplot is fully below the other;
+		\item \textbf{Probabilistic:} each quartile is not above the corresponding one of the other algorithm.\\
+	\end{itemize}
+	
+	\paragraph{Wilcoxon's Test:} It's a test, focused on effectiveness, used to determine if the empirical difference among two algorithms is significant. Steps:
+	\begin{enumerate}
+		\item Compute the difference of the algorithms results, instance by instance
+		\item Sort them by increasing absolute values and assign a rank (number) to each one
+		\item Give a sign to each rank, positive if the difference was positive, negative otherwise
+		\item Sum all positive ranks ($W^+$), as well as the negative ($W^-$)
+		\item Calculate the probability that $|W^+ - W^-|$ is equal or larger than the observed value (not required during exams)
+	\end{enumerate}
+	If the probability is low enough the difference is significant and if $W^+ > W^-$ then the first algorithm is better than the second, or vice versa.\\
+	
+	\section*{Constructive Heuristics}
+	
+	\paragraph{Traveling Salesman Problem TSP:} Types of Heuristic: 
+	\begin{itemize}
+		\item \textbf{Cheapest Insertion:} adds a node and removes an arc from the circuit, such that the total change is minimum;
+		\item \textbf{Nearest Insertion:} look for the node closest to the circuit and find the best way to include it;
+		\item \textbf{Farthest Insertion:} search for the node farthest from the circuit and connect it in the best way possible.\\
+	\end{itemize}
+	
+	\section*{Constructive Metaheuristics}
+	
+	\paragraph{Adaptive Research Technique ART:} Set a number of iterations $\ell$ for a basic constructive heuristic, at each iteration forbid elements inside the solution with probability $\pi$ for a number of iteration $L$. When wanting to include an element, check that the current iteration is distant enough from the last ban of said element, i.e., if $t > T_i + L$ where $t$ is the current iteration and $T$ is the vector containing the tabu attribute for each element.\\
+	
+	\paragraph{Greedy randomized Adaptive Search Procedure GRASP:} Also called semi-greedy, instead of always choosing the best at each step, sometimes make a random step. How can we determine which step? 
+	\begin{itemize}
+		\item \textbf{Uniform probability:} each possibility has the same probability;
+		\item \textbf{HBSS:} sort the possibilities by non-increasing values of $\varphi$, assign a probability according to the position in the order;
+		\item \textbf{Restricted Candidate List:} sort the possibilities, choose from a number of choices among the best. We can define the RCL through 
+		\begin{itemize}
+			\item \textbf{Cardinality:} take the $\mu$ best elements
+			\item \textbf{Value:} include all the elements above the threshold
+			$$ \varphi_\mu = (1-\mu)\varphi_{\max} + \mu \varphi_{\min} $$
+		\end{itemize}
+	\end{itemize}
+	
+	\paragraph{Ant System:} Similar to semi-greedy, but all choices are feasible and the probability of choosing an element is a function which depends on the selection criteria ($\varphi$, which is turned into visibility $\eta$) and some auxiliary information (trail $\tau$), updated after each iteration. To update we have the oblivion parameter $\rho$ and the conversion coefficient $Q$: 
+	$$ 
+	\tau_i = \begin{cases}
+		(1 - \rho) \tau_i & \text{ for } i \notin x \\
+		(1 - \rho) \tau_i + \rho \cdot2 Q \cdot f(x) & \text{ for } i \in x \\
+	\end{cases}
+	$$
+	where $f(x)$ is the value of the final solution. We multiply all trails by $(1-\rho)$ and then add $\rho Q f(x)$ to the elements in the current solution, since they're "promising".\\
+	
+\end{document}
