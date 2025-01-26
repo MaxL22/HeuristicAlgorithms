@@ -75,7 +75,7 @@ Scatter Search (SS), proposed by Glover (1977), proceeds as follows
 		
 		\item \textbf{improve} $z$ \textbf{obtaining} $z'$ with an \textbf{exchange procedure}
 		
-		\item if $z' \notin B$ and $B$ contains a \textbf{worse solution}, \textbf{replace it} with $z'$ (we want no duplicates in the reference set); i.e. if it's better than any solution in our set of best solutions replace it.
+		\item if $z' \notin B$ and $B$ contains a \textbf{worse solution}, \textbf{replace it} with $z'$ (we want no duplicates in the reference set); i.e., if it's better than any solution in our set of best solutions replace it.
 		
 		\item if $z' \notin D$ and $D$ includes a \textbf{closer solution}, \textbf{replace it} with $z'$ (we want no duplicates in the reference set); i.e. if it's further away than any solution in our set of farthest solutions replace it.
 	\end{itemize}
@@ -126,7 +126,7 @@ The rationale is that
 		\ENDIF
 		\ENDFOR
 		\STATE $P := \emptyset$
-		\FOR{each $(x, y ) \in B \times (B \cup D)$} 
+		\FORALL{$(x, y ) \in B \times (B \cup D)$} 
 		\STATE // Recombine to build the new population
 		\STATE $P := P \cup Recombine(x, y , I )$
 		\ENDFOR
@@ -283,8 +283,6 @@ Since the \textbf{distance} of $z^{(k)}$ from $y$ is \textbf{decreasing}, one ca
 	\item \textbf{Unfeasible subsets} without the risk of not getting back to feasibility (they do not improve directly, but open the way to improvements).\\
 \end{itemize}
 
-%\newpage
-
 \subsubsection{Variants}
 
 Given two solutions $x$ and $y$, Path Relinking has several variants:
@@ -323,7 +321,7 @@ In a strict sense, every representation of a solution in memory is an encoding: 
 
 \subsection{Genetic Algorithm}
 
-The genetic algorithm, proposed by Holland (1975), is the most famous among the encoding algorithms but there's a large family of similar methods.\\
+The genetic algorithm, proposed by Holland (1975), is the most famous among the encoding algorithms, but there's a large family of similar methods.\\
 
 It \textbf{builds and encodes a population} $X^{(0)}$, and \textbf{repeatedly applies}:
 \begin{enumerate}
@@ -397,7 +395,7 @@ The encoding can lead wherever inside the $2^B$ possibilities
 \begin{center}
 	\includegraphics[width=0.75\columnwidth]{img/feasible1}
 \end{center}
-Often there's a feasible region, but some constraints (usually quantitative) to obtain a "solution space", with elements that are not solutions, strictly speaking, but they are kinda similar, so we call them unfeasible solutions. E.g., solutions that exceed capacity in the BPP, they will not be feasible but they "look like" a solution, structurally speaking it makes sense.\\
+Often there's a feasible region, but some constraints (usually quantitative) to obtain a "solution space", with elements that are not solutions, strictly speaking, but they are kinda similar, so we call them unfeasible solutions. E.g., solutions that exceed capacity in the BPP, they will not be feasible, but they \textit{look like} a solution, structurally speaking it makes sense.\\
 
 Some encodings \textbf{guarantee structural} (though not quantitative) \textbf{feasibility}.\\
 
@@ -471,9 +469,7 @@ Examples of encodings:
 
 \newpage
 
-\paragraph{Permutations of a set}
-
-A common encoding is given by the \textbf{permutations of a set}
+\paragraph{Permutations of a set:} A common encoding is given by the \textbf{permutations of a set}
 \begin{itemize}
 	\item If the \textbf{solutions are permutations}, this is the \textbf{natural encoding} (TSP solutions are subsets of arcs, but also permutations of nodes).\\
 	
@@ -516,8 +512,7 @@ We need to transform fitness into probability, but how? \\
 
 \newpage
 
-\paragraph{Proportional selection}
-The original scheme proposed by Holland (1975) assumed a \textbf{probability proportional to fitness}
+\paragraph{Proportional selection:} The original scheme proposed by Holland (1975) assumed a \textbf{probability proportional to fitness}
 $$ \pi_{\xi} = \frac{\varphi (\xi)}{\sum_{\xi \in \Xi} \varphi (\xi)} $$
 
 This is named \textbf{roulette-wheel selection} or \textbf{spinning wheel selection:}
@@ -724,18 +719,18 @@ We distinguish between
 The \textbf{existence of unfeasible encodings} implies \textbf{several disadvantages}:
 \begin{itemize}
 	\item \textbf{inefficiency:} computational time is lost handling meaningless objects
-	\item \textbf{ineffectiveness:} the heuristic explores less solutions (possibly, none)
+	\item \textbf{ineffectiveness:} the heuristic explores fewer solutions (possibly, none)
 	\item \textbf{design problems:} fitness must be defined also on unfeasible subsets
 \end{itemize}
 \nn
 
 There are three main approaches to \textbf{face this problem}
 \begin{enumerate}
-	\item \textbf{Special encodings and operators} (avoid or limit infeasibility).\\
+	\item \textbf{Special encodings and operators:} (avoid or limit infeasibility).\\
 	
-	\item \textbf{Repair procedures} (turn infeasibility into feasibility).\\
+	\item \textbf{Repair procedures:} (turn infeasibility into feasibility).\\
 	
-	\item \textbf{Penalty functions} (accept infeasibility, but discourage it).\\
+	\item \textbf{Penalty functions:} (accept infeasibility, but discourage it).\\
 \end{enumerate}
 
 \newpage
