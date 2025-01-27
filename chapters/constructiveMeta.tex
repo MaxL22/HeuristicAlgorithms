@@ -392,8 +392,7 @@ Two main strategies are used to define the RCL
 	\end{itemize}
 	You decide that you want to take $\mu$ elements (usually fixed), each node will have $\mu$ outgoing arcs.\\
 	
-	%TODO Check Min and Max? Swapped but idk, makes more sense this way
-	\item \textbf{Value:} the RCL includes \textbf{all} the \textbf{elements} of $\Delta_A^+ (x)$ whose \textbf{value is between} $\varphi_{min}$ \textbf{and} $(1 − \mu) \varphi_{max} + \mu \varphi_{min}$ where
+	\item \textbf{Value:} the RCL includes \textbf{all} the \textbf{elements} of $\Delta_A^+ (x)$ whose \textbf{value is between} $\varphi_{min}$ \textbf{and} $(1 − \mu) \varphi_{min} + \mu \varphi_{max}$ (for minimization problems) where
 	$$ \varphi_{min} (x) = \min_{i \in \Delta_A^+ (x)} \varphi_A (i,x) \;\;\;\;\; \varphi_{max} = \max_{i \in \Delta_A^+ (x)} \varphi_A (i,x) $$
 	and $\mu \in [0; 1]$ is a parameter fixed by the user
 	\begin{itemize}

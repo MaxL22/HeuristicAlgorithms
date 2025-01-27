@@ -18,8 +18,8 @@ Such processes admit a nice modeling tool.\\
 \subsection{Construction Graph}
 Every construction heuristic $A$ defines a \textbf{construction graph}
 \begin{itemize}
-	\item the \textbf{node set} $F_A \subseteq 2^B$ (\textbf{search space}) is the collection of all subsets $x \subseteq B$ acceptable for $A$
-	\item the \textbf{arc set} is the collection of all pairs $(x, x \cup \{i\})$ such that $x \in F_A$, $i \in B \setminus x$ and $x \cup \{i\} \in F_A$ (connects $x$ with $x$ plus one element). The arcs represent the elementary extensions of the acceptable subsets
+	\item the \textbf{node set} $\mathcal{F}_A \subseteq 2^B$ (\textbf{search space}) is the collection of all subsets $x \subseteq B$ acceptable for $A$
+	\item the \textbf{arc set} is the collection of all pairs $(x, x \cup \{i\})$ such that $x \in \mathcal{F}_A$, $i \in B \setminus x$ and $x \cup \{i\} \in \mathcal{F}_A$ (connects $x$ with $x$ plus one element). The arcs represent the elementary extensions of the acceptable subsets
 \end{itemize}
 
 It's a directed graph in which the nodes compose the search space, dependent on $A$, and the arcs link all the element of the search space to every element with a cardinality of one more. Essentially the nodes are all the possible subsets, while the arcs represent all the possible connections (additions of elements) for each node (subset).\\
@@ -31,7 +31,7 @@ Each possible execution of $A$ is a \textbf{maximal path of the construction gra
 	\item \textbf{from} the empty subset $x = \emptyset$
 	\item to a subset $x$ that \textbf{cannot be acceptably extended} (and hopefully a feasible solution)
 \end{itemize}
-$$ \Delta^+_A (x) = \left\{i \in B \setminus x : \, x \cup \left\{i\right\} \in F_A \right\} = \emptyset $$
+$$ \Delta^+_A (x) = \left\{i \in B \setminus x : \, x \cup \left\{i\right\} \in \mathcal{F}_A \right\} = \emptyset $$
 
 \newpage
 
@@ -41,7 +41,7 @@ $$ \Delta^+_A (x) = \left\{i \in B \setminus x : \, x \cup \left\{i\right\} \in 
 \end{center}
 The algorithm visits a \textbf{sequence of subsets} $\emptyset = x^{(0)} \subset \, ... \, \subset x^{(t_f)}$ terminating
 \begin{itemize}
-	\item in an \textbf{optimal solution} $x^\ast \in X^\ast$ (Example: MST problem, both with $F_{Kruskal}$ and $F_{Prim}$)
+	\item in an \textbf{optimal solution} $x^\ast \in X^\ast$ (Example: MST problem, both with $\mathcal{F}_{Kruskal}$ and $\mathcal{F}_{Prim}$)
 	\item in a \textbf{nonoptimal feasible solution} $x \in X$ (Example: KP, MDP, etc...)
 	\item in an \textbf{unfeasible subset} $x'$ (Example: TSP on a noncomplete graph)
 \end{itemize}
@@ -52,11 +52,11 @@ The algorithm visits a \textbf{sequence of subsets} $\emptyset = x^{(0)} \subset
 A constructive heuristic $A$ \textbf{terminates} when
 \begin{itemize}
 	\item the current \textbf{subset} $x^{(t)}$ has \textbf{no outgoing arc}
-	$$ \Delta^+_A \left(x^{(t)}\right) = \left\{i \in B \setminus x^{(t)} : \, x^{(t)} \cup \left\{i\right\} \in F_A \right\} = \emptyset $$
+	$$ \Delta^+_A \left(x^{(t)}\right) = \left\{i \in B \setminus x^{(t)} : \, x^{(t)} \cup \left\{i\right\} \in \mathcal{F}_A \right\} = \emptyset $$
 	$\Delta^+_A \left(x^{(t)}\right)$ represents the subset of the ground set that can be added in $x^{(t)}$ in an acceptable manner for algorithm $A$ (what I can add to our solution).\\
 	
-	\item that is, \textbf{extending} $x^{(t)}$ implies to \textbf{leave the search space} $F_A$
-	$$ x^{(t)} \cup \left\{i\right\} \notin F_A \text{ for each } i \in B \setminus x^{(t)}$$
+	\item that is, \textbf{extending} $x^{(t)}$ implies to \textbf{leave the search space} $\mathcal{F}_A$
+	$$ x^{(t)} \cup \left\{i\right\} \notin \mathcal{F}_A \text{ for each } i \in B \setminus x^{(t)}$$
 \end{itemize}
 
 There is no arc going out of the node in the construction graph.\\
@@ -74,20 +74,20 @@ Different behaviors are possible
 \newpage
 
 \subsubsection{Definition of the construction graph}
-Ideally, the \textbf{search space} $F_A$ should \textbf{include}
+Ideally, the \textbf{search space} $\mathcal{F}_A$ should \textbf{include}
 \begin{itemize}
-	\item the \textbf{empty subset}: $\emptyset \in F_A$ ($A$ starts from $\emptyset$)
-	\item all \textbf{feasible solutions}: $X \subseteq F_A$ (maybe excluding provably nonoptimal solutions)
+	\item the \textbf{empty subset}: $\emptyset \in \mathcal{F}_A$ ($A$ starts from $\emptyset$)
+	\item all \textbf{feasible solutions}: $X \subseteq \mathcal{F}_A$ (maybe excluding provably nonoptimal solutions)
 	\item \textbf{only subsets accessible from} $\emptyset$ (inaccessible subsets are useless)
 \end{itemize}
 
-Using $F_A$ requires a \textbf{fast inclusion test} to answer the decision problem:
+Using $\mathcal{F}_A$ requires a \textbf{fast inclusion test} to answer the decision problem:
 \begin{itemize}[label*=]
-	\item "is subset $x^{(t)}$ acceptable?" ($x^{(t)} \in F_A$?)
+	\item "is subset $x^{(t)}$ acceptable?" ($x^{(t)} \in \mathcal{F}_A$?)
 \end{itemize}
-or at least a \textbf{fast update test}: if $x^{(t)} \in F_A$, is $x^{(t)} \cup \{i\} \in F_A$? \\
+or at least a \textbf{fast update test}: if $x^{(t)} \in \mathcal{F}_A$, is $x^{(t)} \cup \{i\} \in \mathcal{F}_A$? \\
 
-$F_A = \left\{x' \subseteq B : \, \exists x \in X : \, x' \subseteq x\right\}$ (subsets of feasible solutions, i.e. \textbf{partial solutions}) is a natural candidate, but its \textbf{inclusion test}
+$\mathcal{F}_A = \left\{x' \subseteq B : \, \exists x \in X : \, x' \subseteq x\right\}$ (subsets of feasible solutions, i.e. \textbf{partial solutions}) is a natural candidate, but its \textbf{inclusion test}
 \begin{itemize}[label*=]
 	\item "is subset $x^{(t)}$ a partial solution?" ($\exists x \in X : \, x^{(t)} \subseteq x$?)
 \end{itemize}
@@ -95,32 +95,32 @@ $F_A = \left\{x' \subseteq B : \, \exists x \in X : \, x' \subseteq x\right\}$ (
 \begin{itemize}[label*=]
 	\item "is there any feasible solution?" ($\exists x \in X$?)
 \end{itemize}
-and could be NP-complete. In that case, one needs to \textbf{relax the search space}; include other subsets which may lead to more sub-optimal solutions, while making the acceptability test easier.\\
+and could be $\np$-complete. In that case, one needs to \textbf{relax the search space}; include other subsets which may lead to more sub-optimal solutions, while making the acceptability test easier.\\
 
-Including a partial solution is like asking "is there a solution that includes this subset?" and could be an NP-complete problem, not always polynomial.\\
+Including a partial solution is like asking "is there a solution that includes this subset?" and could be an $\np$-complete problem, not always polynomial.\\
 
-If the \textbf{objective function} can be extended from $X$ to $F_A$, it looks natural to use the objective function as the \textbf{selection criteria}
+If the \textbf{objective function} can be extended from $X$ to $\mathcal{F}_A$, it looks natural to use the objective function as the \textbf{selection criteria}
 $$ \phi_A (i,x) = f \left(x \cup \left\{i\right\} \right)$$
 
 \newpage
 
-\paragraph{Examples of search spaces:} The search space $F_A$ may include:
+\paragraph{Examples of search spaces:} The search space $\mathcal{F}_A$ may include:
 \begin{itemize}
 	\item \textbf{All feasible solutions}
-	$$ F_A = X $$
+	$$ \mathcal{F}_A = X $$
 	In the KP, all subsets of feasible weight.\\
 	
 	\item \textbf{All partial (and all feasible) solutions}
-	$$ F_A = \bigcup_{x \in X} 2^x $$
+	$$ \mathcal{F}_A = \bigcup_{x \in X} 2^x $$
 	In the MDP, all subsets of at most $k$ points.\\
 	In Kruskal's algorithm for the MSTP, all spanning forests.\\
 	
 	\item \textbf{Only some special promising partial solutions}
-	$$ F_A \subset \bigcup_{x \in X} 2^x $$
+	$$ \mathcal{F}_A \subset \bigcup_{x \in X} 2^x $$
 	In Prim's algorithm for the MSTP, all trees spanning a given vertex.\\
 	
 	\item \textbf{Some special subsets not sufficient to guarantee feasibility}
-	$$ F_A \supset \bigcup_{x \in X} 2^x $$
+	$$ \mathcal{F}_A \supset \bigcup_{x \in X} 2^x $$
 	In the TSP, all subsets of arcs not including branching and sub-tours.\\
 \end{itemize}
 
@@ -166,7 +166,7 @@ It is fundamental to \textbf{study the problem} before the algorithm.\\
 
 \paragraph{Remarkable case:} A particularly remarkable case is that in which
 \begin{itemize}
-	\item the \textbf{objective function} is \textbf{extended} from $X$ to $F_A$
+	\item the \textbf{objective function} is \textbf{extended} from $X$ to $\mathcal{F}_A$
 	\item the \textbf{selection criteria is the objective function}
 	$$ \phi_A (i,x) = f\left(x \cup \left\{i\right\}\right) $$
 \end{itemize}
@@ -201,7 +201,7 @@ In the FKP the capacity simply imposes a \textbf{cardinality constraint}: the fe
 \end{algorithm}
 
 \begin{itemize}
-	\item Define $F_A = X$: subset $x$ can be extended as long as $|x| < \lfloor V/v \rfloor$
+	\item Define $\mathcal{F}_A = X$: subset $x$ can be extended as long as $|x| < \lfloor V/v \rfloor$
 	\item Any or no element of $B \setminus x$ extends $x$ feasibly ($\Delta_A (x) = B \setminus x$ or $\emptyset$)
 	\item The objective function is additive, and therefore
 	$$ f(x \cup \left\{i\right\}) = f(x) + \phi_i \implies \arg \max_{i \in B \setminus x} f(x \cup \left\{i\right\}) = \arg \max_{i \in B \setminus x} \phi_i $$
@@ -235,7 +235,7 @@ The algorithm is similar, the \textbf{differences} are:
 	\end{algorithmic}
 \end{algorithm}
 
-Define $F_A = X$: only some elements of $B \setminus x$ extend $x$ feasibly
+Define $\mathcal{F}_A = X$: only some elements of $B \setminus x$ extend $x$ feasibly
 $$ \Delta_A^+ (x) = \left\{i \in B \setminus x: \, \sum_{j \in x} v_j + v_i \leq V \right\} $$
 
 The objective function is additive, and therefore
@@ -248,7 +248,7 @@ The last subset visited is the best solution found.\\
 \subsubsection{Traveling Salesman Problem}
 Given a directed graph and a cost function defined on the arcs, find a \textbf{minimum cost circuit visiting all the nodes} of the graph.\\
 
-Define $F_A$ as the collection of all subsets of arcs that form no sub-tour and keep a degree $\leq 1$ in all nodes, (it is a superset of the partial solutions). The constructive algorithm add each time the cheapest arc among those in $F_A$, until nothing can be added, that's the solution.\\
+Define $\mathcal{F}_A$ as the collection of all subsets of arcs that form no sub-tour and keep a degree $\leq 1$ in all nodes, (it is a superset of the partial solutions). The constructive algorithm add each time the cheapest arc among those in $\mathcal{F}_A$, until nothing can be added, that's the solution.\\
 
 The selection criteria is the objective function (it is additive, therefore equivalent to the cost of the new arc).
 
@@ -286,7 +286,7 @@ Select from a set of points a subset of $k$ points with the \textbf{maximum sum 
 	\end{algorithmic}
 \end{algorithm}
 
-Define $F_A$ as the set of all partial solutions.\\
+Define $\mathcal{F}_A$ as the set of all partial solutions.\\
 
 The subset $x$ can be extended as long as $|x| < k$.\\
 
@@ -313,14 +313,12 @@ An ideal constructive algorithm always keeps one open way to the optimal solutio
 
 In practice, some of these properties is usually lost at some step of the algorithm.\\
 
-%\newpage
-
 \subsubsection{Relevant Features}
 None of the above algorithms where able to find the optimum (except the FKP, examples not provided, but trust me).\\
 
 What features allow a constructive algorithm to \textbf{find the optimum}? 
 \begin{itemize}
-	\item A \textbf{search space identical to the feasible region} ($F = X$)? (No, because this holds for both the fractional and general KP)
+	\item A \textbf{search space identical to the feasible region} ($\mathcal{F} = X$)? (No, because this holds for both the fractional and general KP)
 	\item A \textbf{cardinality-constrained problem}? (It would explain failing on the KP, but not on the MDP and TSP)
 	\item An \textbf{additive objective function}? (It does not explain failing on the TSP)
 \end{itemize}
@@ -338,13 +336,13 @@ Assume that
 	$$ \exists \phi: \, B \rightarrow \mathbb{N}: \, f(x) = \sum_{i \in x} \phi_i $$
 	
 	\item the \textbf{solutions} are the \textbf{bases} (maximal subsets) of the \textbf{search space}
-	$$ X = B_F = \left\{Y \in F: \, \not \exists Y' \in F: \, Y \subset Y' \right\} $$
-	The maximal subsets of the search space $F$, there are no other subsets $Y'$ such that $Y$ is fully included in $Y'$ (can't be bigger).
+	$$ X = B_{\mathcal{F}} = \left\{Y \in \mathcal{F}: \, \not \exists Y' \in \mathcal{F}: \, Y \subset Y' \right\} $$
+	The maximal subsets of the search space $\mathcal{F}$, there are no other subsets $Y'$ such that $Y$ is fully included in $Y'$ (can't be bigger).
 \end{enumerate}
 
 It is a very frequent case (KP, MAX-SAT, TSP, but not MDP, SCP).\\
 
-In this case, the constructive algorithm always finds the optimal solution if and only if $(B, F)$ is a \textbf{matroid embedding}.\\
+In this case, the constructive algorithm always finds the optimal solution if and only if $(B, \mathcal{F})$ is a \textbf{matroid embedding}.\\
 
 Since the definition of matroid embedding is rather complex, let us focus on some important structures
 \begin{itemize}
@@ -355,19 +353,19 @@ Since the definition of matroid embedding is rather complex, let us focus on som
 \newpage
 
 \subsubsection{Greedoids}
-A \textbf{greedoid} $(B, F)$ (ground set, search space) with $F \subseteq 2^B$ is a \textbf{pair} such that
+A \textbf{greedoid} $(B, \mathcal{F})$ (ground set, search space) with $\mathcal{F} \subseteq 2^B$ is a \textbf{pair} such that
 \begin{itemize}
-	\item \textbf{Trivial axiom:} $\emptyset \in F$.\\
+	\item \textbf{Trivial axiom:} $\emptyset \in \mathcal{F}$.\\
 	The empty set is acceptable. \\
 	A greedy algorithm starts from the empty set so it must be included.\\
 	
-	\item \textbf{Accessibility axiom:} if $x \in F$ and $x 6\neq \emptyset$ then $\exists i \in x : \, x \setminus \{i\} \in F$.\\
+	\item \textbf{Accessibility axiom:} if $x \in \mathcal{F}$ and $x \neq \emptyset$ then $\exists i \in x : \, x \setminus \{i\} \in \mathcal{F}$.\\
 	Any acceptable subset can be built adding elements in suitable order. Putting element in a given order creates a path through the search space.\\
 	If you have a not empty subset in the search space, it's always possible to find an element of the subset that can be removed leaving the result in the search space.\\
 	
-	\item \textbf{Exchange axiom:} if $x, y \in F$ with $|x| = |y| + 1$, then $\exists i \in x \setminus y$ such that $y \cup \{i\} \in F$.\\
+	\item \textbf{Exchange axiom:} if $x, y \in \mathcal{F}$ with $|x| = |y| + 1$, then $\exists i \in x \setminus y$ such that $y \cup \{i\} \in \mathcal{F}$.\\
 	Any acceptable subset can be extended with a suitable element of any other acceptable subset of larger cardinality.\\
-	Two subsets in the search space, one has one more element than the second (cardinality $+1$), you can always find at least one element which is only in the larger subset and can be added to the smaller one in a way that results in another valid subset ($\in F$).\\
+	Two subsets in the search space, one has one more element than the second (cardinality $+1$), you can always find at least one element which is only in the larger subset and can be added to the smaller one in a way that results in another valid subset ($\in \mathcal{F}$).\\
 \end{itemize}
 
 The exchange axiom implies that \textbf{all bases have the same cardinality}. \\
@@ -384,15 +382,15 @@ Greedoids \textbf{make greedy algorithms possible}, but not necessarily exact.\\
 \newpage
 
 \subsubsection{Matroids}
-A matroid is a \textbf{set system} $(B, F)$ with $F \subseteq 2^B$ such that
+A matroid is a \textbf{set system} $(B, \mathcal{F})$ with $\mathcal{F} \subseteq 2^B$ such that
 \begin{itemize}
-	\item \textbf{Trivial axiom:} $\emptyset \in F$.\\
+	\item \textbf{Trivial axiom:} $\emptyset \in \mathcal{F}$.\\
 	
-	\item \textbf{Heredity axiom:} if $x \in F$ and $y \subset x$ then $y \in F$.\\
+	\item \textbf{Heredity axiom:} if $x \in \mathcal{F}$ and $y \subset x$ then $y \in \mathcal{F}$.\\
 	Any acceptable subset can be built adding its elements in any order.\\
 	For any subset inside the search space, its subsets are also inside the search space.\\
 	
-	\item \textbf{Exchange axiom:} if $x, y \in F$ with $|x| = |y| + 1$, then $\exists i \in x \setminus y$ such that $y \cup \{i\} \in F$.\\
+	\item \textbf{Exchange axiom:} if $x, y \in \mathcal{F}$ with $|x| = |y| + 1$, then $\exists i \in x \setminus y$ such that $y \cup \{i\} \in \mathcal{F}$.\\
 	Any acceptable subset can be extended with a suitable element of any other subset of larger cardinality.\\
 \end{itemize}
 
@@ -404,7 +402,7 @@ The heredity axiom is a \textbf{stronger version of accessibility}
 
 
 \paragraph{Uniform matroid: fractional and general knapsack}
-$$ F = \left\{x \subseteq B : \, |x| \leq \lfloor V / v \rfloor \right\}$$
+$$ \mathcal{F} = \left\{x \subseteq B : \, |x| \leq \lfloor V / v \rfloor \right\}$$
 
 \begin{itemize}
 	\item Trivial axiom: the empty set respects the cardinality constraint
@@ -413,12 +411,12 @@ $$ F = \left\{x \subseteq B : \, |x| \leq \lfloor V / v \rfloor \right\}$$
 \end{itemize}
 
 For the general KP the first two axioms hold, but the third one does not.\\
-Example: if $V = 6$ and $v = [\; 3 \; 3 \; 2 \; 2 \; 1 \; ]$, the subsets $x = \{3, 4, 5\}$ and $y = \{1, 2\}$ are in $F$, but no element of $x$ can be added to $y$.\\
+Example: if $V = 6$ and $v = [\; 3 \; 3 \; 2 \; 2 \; 1 \; ]$, the subsets $x = \{3, 4, 5\}$ and $y = \{1, 2\}$ are in $\mathcal{F}$, but no element of $x$ can be added to $y$.\\
 
 \newpage
 
 \paragraph{Graphic matroid: minimum spanning tree}
-$$ F = \left\{x \subseteq B : x \text{ forms no cycles }\right\}$$
+$$ \mathcal{F} = \left\{x \subseteq B : x \text{ forms no cycles }\right\}$$
 
 \begin{itemize}
 	\item Trivial axiom: the empty set of edges forms no cycles
@@ -437,11 +435,11 @@ $(A, D), (D, H)$ and $(C , G )$ can be added to $y$.\\
 \paragraph{TSP:} the first two axioms hold
 \begin{itemize}
 	\item the empty set has no sub-tours and degrees $\leq 1$
-	\item any proper subset of a set $\in F$ (no sub-tours and degrees $\leq 1$) also belongs to $F$
+	\item any proper subset of a set $\in \mathcal{F}$ (no sub-tours and degrees $\leq 1$) also belongs to $\mathcal{F}$
 \end{itemize}
 but the third axiom is violated.\\
 Example: $y = \{(1, 2), (2, 3)\}$ and $x = \{(3, 1), (1, 4), (4, 2)\}$.\\
-No arc of $x$ can be added to $y$ remaining in $F$.\\
+No arc of $x$ can be added to $y$ remaining in $\mathcal{F}$.\\
 
 \newpage
 
@@ -451,13 +449,13 @@ The optimality of the greedy algorithm can be proved for greedoids (weaker secon
 \textbf{Strong exchange axiom:}
 $$ 
 \begin{cases}
-	x \in F, y \in B_F & \text{ such that } x \subset y \\
-	i \in B \setminus y & \text{ such that } x \cup \left\{i\right\} \in F
+	x \in \mathcal{F}, y \in B_{\mathcal{F}} & \text{ such that } x \subset y \\
+	i \in B \setminus y & \text{ such that } x \cup \left\{i\right\} \in \mathcal{F}
 \end{cases}
 \implies \exists j \in y \setminus x: \, 
 \begin{cases}
-	x \cup \left\{j\right\} \in F \\
-	y \cup \left\{i\right\} \setminus \left\{j\right\} \in F
+	x \cup \left\{j\right\} \in \mathcal{F} \\
+	y \cup \left\{i\right\} \setminus \left\{j\right\} \in \mathcal{F}
 \end{cases}
 $$
 
@@ -468,7 +466,7 @@ Given a base $y$ and a subspace of the search space $x$, which is also a subset 
 \paragraph{MST:} A classical example of greedoid with strong exchange axiom is given by
 \begin{itemize}
 	\item $B =$ edge set of a graph
-	\item $F =$ collection of the trees including a given vertex $v_1$
+	\item $\mathcal{F} =$ collection of the trees including a given vertex $v_1$
 \end{itemize}
 that yields Prim’s algorithm for the MST problem.\\
 
@@ -481,7 +479,7 @@ The exchange axiom holds in the strong form.\\
 Notice that the optimality of a constructive algorithm $A$ depends on
 \begin{itemize}
 	\item the \textbf{properties of the problem} (e.g., additive objective function, bases as feasible solutions)
-	\item the \textbf{properties of the search space} $F_A$ (that is, of the algorithm)
+	\item the \textbf{properties of the search space} $\mathcal{F}_A$ (that is, of the algorithm)
 \end{itemize}
 
 % End of L7
@@ -491,7 +489,7 @@ Notice that the optimality of a constructive algorithm $A$ depends on
 \subsubsection{What to do when the axioms are violated}
 If a search space \textbf{violates} the desired \textbf{axioms}, one can try and \textbf{change} it.\\
 
-For the TSP, an alternative $F_A$ includes all paths starting from node $1$.\\
+For the TSP, an alternative $\mathcal{F}_A$ includes all paths starting from node $1$.\\
 Let $N_x$ be the set of nodes visited from $x$: the acceptable extensions are all arcs going out of the last node of path $x$ and not closing a sub-tour
 $$ \Delta_A^+ (x) = \left\{(h,k) \in A : \, h = \text{ Last } (x), \, k \notin N_x \text{ or } k = 1 \text{ and } N_x = N \right\} $$
 
@@ -509,13 +507,13 @@ But the algorithm can still be a \textbf{reasonable heuristic}.\\
 
 \newpage
 
-\paragraph{The Nearest Neighbour heuristic for the TSP:} The Nearest Neighbour (NN) heuristic adopts the \textbf{alternative search space} keeping the \textbf{objective function} as the \textbf{selection criteria}
+\paragraph{The Nearest Neighbor heuristic for the TSP:} The Nearest Neighbor (NN) heuristic adopts the \textbf{alternative search space} keeping the \textbf{objective function} as the \textbf{selection criteria}
 \begin{enumerate}
 	\item \textbf{Start} with an \textbf{empty set of arcs}: $x^{(0)} = \emptyset$ that represents a degenerate path going out of node $1$ (the optimal solution certainly visits node $1$).\\
 	
 	\item \textbf{Find} the \textbf{arc of minimum} cost going out of the last node of $x$
 	$$ (i,j) = \arg \min_{(h,k \in \Delta_A^+ (x))} c_{hk} $$
-	(the objective function is additive). It's selecting the "nearest neighbour", i.e. the next closest node, without closing a sub-tour (only unseen nodes).\\
+	(the objective function is additive). It's selecting the "nearest neighbor", i.e. the next closest node, without closing a sub-tour (only unseen nodes).\\
 	
 	\item If $j \neq 1$, go back to point $2$; otherwise, terminate ($\Delta_A^+ (x)$ allows the return to node $1$ only at the last step).\\
 \end{enumerate}
@@ -548,7 +546,7 @@ The optimal solution cannot be found starting from any node
 \subsection{Heuristic constructive algorithms (HCA): the KP}
 If the problem does \textbf{not admit} a \textbf{search space} with \textbf{suitable properties}, one must keep into account the \textbf{constraints of the problem} adopting
 \begin{enumerate}
-	\item not only a \textbf{good definition} of $F_A$
+	\item not only a \textbf{good definition} of $\mathcal{F}_A$
 	\item but also a \textbf{sophisticated definition of the selection criteria} $\varphi_A (i, x)$
 \end{enumerate}
 This allows effective results, even if not provably optimal.\\
@@ -744,7 +742,7 @@ $B = O \times C$ includes the \textbf{object-container assignments} $(i, j)$
 	\item with the \textbf{total volume} in each container \textbf{not exceeding} the \textbf{capacity}
 \end{itemize}
 
-Let us define the \textbf{search space} $F_A$ as the set of \textbf{all partial solutions}.\\
+Let us define the \textbf{search space} $\mathcal{F}_A$ as the set of \textbf{all partial solutions}.\\
 
 The \textbf{objective function} is a \textbf{bad selection criteria}, because it is flat.\\
 All the augmented subsets have the same value or increase it by $1$.\\
@@ -844,7 +842,7 @@ The fundamental problem is to \textbf{define a family} $\Delta_A^+ (x)$ of subse
 $$ \min_{(B^+, B^-) \in \Delta_A^+ (x)} \varphi_A (B^+, B^-, x) $$
 that is
 \begin{itemize}
-	\item subsets \textbf{efficiently optimizable} (minimum paths, ...)
+	\item subsets \textbf{efficiently optimizable} (minimum paths, \dots)
 	\item subsets of \textbf{limited size} (e.g., $|B^+| = 2$ and $|B^-| = 1$)
 \end{itemize}
 
@@ -876,7 +874,7 @@ but adding \textbf{one edge at a time}
 	\item has a hard time \textbf{distinguishing useful and redundant} edges
 \end{itemize}
 
-The Distance Heuristic adopts as \textbf{search space} $F$ the \textbf{collection of all trees including a given special vertex} $v_1$ (as in Prim).\\
+The Distance Heuristic adopts as \textbf{search space} $\mathcal{F}$ the \textbf{collection of all trees including a given special vertex} $v_1$ (as in Prim).\\
 
 It iteratively \textbf{adds a path} $B^+$ \textbf{between} $x$ \textbf{and a special vertex} instead of a single edge, so that
 \begin{itemize}
@@ -941,7 +939,7 @@ and converges to $2$ as $n$ increases and $\epsilon$ decreases.\\
 \newpage
 
 \subsection{Insertion algorithms for the TSP}
-Several heuristic algorithms for the TSP define the \textbf{search space} $F_A$ as the \textbf{set of all circuits} of the graph \textbf{including a given node}; a circuit
+Several heuristic algorithms for the TSP define the \textbf{search space} $\mathcal{F}_A$ as the \textbf{set of all circuits} of the graph \textbf{including a given node}; a circuit
 \begin{itemize}
 	\item \textbf{cannot} be obtained from another one by \textbf{adding a single arc}
 	\item \textbf{can} be obtained \textbf{adding two arcs} $(i, k)$, $(k, j)$ and \textbf{removing one} $(i, j)$
@@ -976,7 +974,7 @@ The selection criteria $\varphi_A (B^+, B^-, x)$ must \textbf{choose an arc and 
 The \textbf{Cheapest Insertion} (CI) heuristic uses as a \textbf{selection criteria}
 $$ \varphi_A (B^+, B^-, x) = f \left(x \cup B^+ \setminus B^- \right) $$
 
-\textbf{Objective function} $f (x)$ is \textbf{additive}, hence \textbf{extensible} to the whole of $F_A$.\\
+\textbf{Objective function} $f (x)$ is \textbf{additive}, hence \textbf{extensible} to the whole of $\mathcal{F}_A$.\\
 
 Here $k$ denotes a general node outside the circuit, $s_i$ (or anything $s$-related) denotes nodes already inside the circuit.\\
 
@@ -1154,13 +1152,13 @@ The regret represents how much worse the other choices will be, so we choose the
 
 You can make this reasoning when you're sure that you will have to take at least one choice for each class.\\
 
-\paragraph{Example:} Consider the CMSTP and ground set $B = V \times T$ (($vertex,subtree$) pairs). Let the weights be uniform ($w_v = 1$ for all $v \in V$) and capacity $W = 2$
+\paragraph{Example:} Consider the CMSTP and ground set $B = V \times T$ ($(vertex,subtree)$ pairs). Let the weights be uniform ($w_v = 1$ for all $v \in V$) and capacity $W = 2$
 
 \begin{center}
 	\includegraphics[width=0.5\columnwidth]{img/RBCSMTP}
 \end{center}
 
-Let the search space $F$ include all partial solutions.\\
+Let the search space $\mathcal{F}$ include all partial solutions.\\
 
 The greedy algorithm puts vertex $2$ in subtree $1$, vertex $3$ in subtree $2$; then vertex $4$ in subtree $1$ and finally vertex $5$ in subtree $3$:
 $$ c(x) = 1 + 1 + 2 + 100 = 104$$ 
@@ -1286,14 +1284,14 @@ It is an approach exactly complementary to the constructive one
 	
 	\item \textbf{Remove an element at a time}, selected 
 	\begin{itemize}
-		\item so as to \textbf{remain within the search space} $F_A$
-		$$ \Delta_A^+ (x) = \left\{i \in x : \, x \setminus \left\{i\right\} \in F_A \right\} $$
+		\item so as to \textbf{remain within the search space} $\mathcal{F}_A$
+		$$ \Delta_A^+ (x) = \left\{i \in x : \, x \setminus \left\{i\right\} \in \mathcal{F}_A \right\} $$
 		
 		\item \textbf{maximizing the selection criteria} $\varphi_A (i, x)$ (usually a cost reduction)
 	\end{itemize}
 	\nn
 	
-	\item \textbf{Terminate} when $\Delta_A^+ (x) = \emptyset$ (there is no way to remain in $F_A$)
+	\item \textbf{Terminate} when $\Delta_A^+ (x) = \emptyset$ (there is no way to remain in $\mathcal{F}_A$)
 \end{itemize}
 
 
@@ -1340,7 +1338,7 @@ This auxiliary destructive heuristic
 	\item \textbf{starts from the solution} $x$ of the constructive heuristic, instead of $B$
 	
 	\item adopts as a \textbf{search space} the \textbf{feasible region}:
-	$$ F_A = X \implies \Delta_A^+ (x) = \left\{ i \in x : \, x \setminus \left\{i\right\} \in X \right\} $$
+	$$ \mathcal{F}_A = X \implies \Delta_A^+ (x) = \left\{ i \in x : \, x \setminus \left\{i\right\} \in X \right\} $$
 	
 	\item adopts as the \textbf{selection criteria} the \textbf{objective function}:
 	$$ \varphi_A (i,x) = f (x \setminus \left\{i\right\}) $$
