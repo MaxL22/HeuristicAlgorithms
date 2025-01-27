@@ -59,6 +59,12 @@
 	
 	\paragraph{Construction Graph:} Every construction heuristic $A$ defines a construction graph, in which the nodes are all the possible subsets $x \subseteq B$ acceptable for $A$, and the arcs connect all solution pairs such as $(x, x \cup \{i\})$, with $x, x \cup \{i\} \in \mathcal{F}_A$, $i \in B \setminus x$ (same solution, cardinality of one more). The graph is directed and acyclic by definition.\\
 	
+	\paragraph{Pure and Adaptive:} A constructive algorithm is 
+	\begin{itemize}
+		\item \textbf{Pure:} if the selection criterion depends only on the new element $i$;
+		\item \textbf{Adaptive:} if $\varphi_A$ depends both on $i$ and the current solution.\\
+	\end{itemize}
+	
 	\paragraph{Traveling Salesman Problem TSP:} Types of Heuristic: 
 	\begin{itemize}
 		\item \textbf{Nearest Neighbor:} from the last visited node to the nearest unvisited node;
@@ -67,7 +73,7 @@
 		\item \textbf{Farthest Insertion:} search for the node farthest from the circuit and connect it in the best way possible.\\
 	\end{itemize}
 	
-	\paragraph{Embedding:} A greedy algorithm is possible for a problem (ground set $B$ and search space $\mathcal{F} \subseteq 2^B$) which has a \textbf{greedoid} embedding, i.e., for which the following hold: 
+	\paragraph{Greedoids and Matroids:} Assuming that the objective function is additive, and the solutions are bases (maximal subsets, can't add any more stuff) of the search space. A greedy algorithm is possible for a problem (ground set $B$ and search space $\mathcal{F} \subseteq 2^B$) which is a \textbf{greedoid}, i.e., for which the following hold: 
 	\begin{itemize}
 		\item \textbf{Trivial axiom:} $\emptyset \in \mathcal{F}$, the empty set is an acceptable solution;
 		\item \textbf{Accessibility axiom:} if $x \in \mathcal{F}$ and $x \neq \emptyset$ then $\exists i \in x : \, x \setminus \{i\} \in \mathcal{F}$. Any acceptable subset can be built adding its element in a suitable order, i.e., there is at least one path that leads to every solution in the search space;
@@ -95,6 +101,19 @@
 		$$
 	\end{itemize}
 	Given a base $y$ and a subset of the search space and base $x$, you can have an element $i$ in the base but not in $y$ that can be feasibly added to $x$. Then there is an element $j$ in $y$ but not $x$ that can be added to $x$ while replacing $j$ with $i$ in the base, all while remaining in the search space.\\
+	
+	\paragraph{Regret-based constructive heuristics:} What if something is good now but bad later? We want to measure the "bad later" with a regret function. Usually such a heuristic consists in:
+	\begin{itemize}
+		\item Partitioning the choices in classes;
+		\item Compute, for each choice, the basic selection criteria;
+		\item Compute, for each class, the regret, i.e., usually, the difference with the second-best choice or the average of all other choices;
+		\item Choose the best choice for the class in which regret is maximum;
+	\end{itemize}
+	This works well when we know we'll have to pick from each class, and we fear being stuck with a much worse choice later.\\
+	
+	\paragraph{Roll-out heuristics:} Also known as single-step look-ahead constructive heuristics, at each step of the basic heuristic look ahead at the next step and compute the solution for each possibility. The complexity remains polynomial but much larger. It can be extended to multiple steps, worsening further the complexity.\\
+	
+	\paragraph{Destructive Heuristics:} Start with the full ground set and remove one element at a time, always remaining in the search space and while maximizing the selection criteria. Usually the solutions are much smaller than the ground set, so they take too long , but it might be useful to append a destructive heuristic to constructive solutions which might have redundant elements.\\
 	
 	\section*{Constructive Metaheuristics}
 	
