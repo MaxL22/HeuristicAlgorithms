@@ -24,8 +24,6 @@
 	
 	\paragraph{Combinatorial Optimization:} A problem is a CO problem if we need to optimize an objective function and the solution is a subset of a finite ground set, from which the search space is defined.\\
 	
-	
-	
 	\paragraph{Knapsack Problem KP:} From a set of object, select the subset with maximal value that stays within a weight constraint.\\
 	
 	\paragraph{Maximum Diversity Problem MDP:} Inside a metric space, select the $k$ points with the maximum pairwise distance.\\
@@ -79,7 +77,7 @@
 	\begin{itemize}
 		\item \textbf{Average-case:} assume a probability distribution on the instances and evaluate the expected value of the approximation factor;
 		\item \textbf{Randomization:} the operations of the algorithm depend on some random values, the solution becomes a random variable that can be investigated;
-		\item \textbf{Parametrisation:} prove an approximation guarantee that depends on other parameters of the instances besides the size $n$; we add parameter $k$ and the time can be expressed as $T(n,k)$, dependent on both, the problem could be polynomial in $n$ but exponential in $k$; $k$ could be part of the input or the solution (in which case we'll know it only \textit{a posteriori}, but an estimate could be available); 
+		\item \textbf{Parametrization:} prove an approximation guarantee that depends on other parameters of the instances besides the size $n$; we can add a parameter $k$ and the time can be expressed as $T(n,k)$, making it dependent on both; the problem could be polynomial in $n$ but exponential in $k$; $k$ could be part of the input or the solution (in which case we'll know it only \textit{a posteriori}, but an estimate could be available); 
 		\item \textbf{Kernelization:} transform all instances of the problem into simpler ones, instead of instances of another problem; it becomes a simpler problem to solve, allowing it to be solved faster (either exactly or heuristically) or to prove that there exists an optimal solution  and maybe know which elements are certainly in said solution.\\
 	\end{itemize}
 	
@@ -105,14 +103,14 @@
 		\item Sort them by increasing absolute values and assign a rank (number) to each one
 		\item Give a sign to each rank, positive if the difference was positive, negative otherwise
 		\item Sum all positive ranks ($W^+$), as well as the negative ($W^-$)
-		\item Calculate the probability that $|W^+ - W^-|$ is equal or larger than the observed value (not required during exams)
+		\item Calculate the probability that $|W^+ - W^-|$ is equal or larger than the observed value (usually not required during exams)
 	\end{enumerate}
 	If the probability is low enough the difference is significant and if $W^+ > W^-$ then the first algorithm is better than the second, or vice versa.\\
 	
 	\addcontentsline{toc}{section}{\protect\numberline{}Constructive Heuristics}
 	\section*{Constructive Heuristics}
 	
-	\paragraph{Construction Graph:} Every construction heuristic $A$ defines a construction graph, in which the nodes are all the possible subsets $x \subseteq B$ acceptable for $A$, and the arcs connect all solution pairs such as $(x, x \cup \{i\})$, with $x, x \cup \{i\} \in \mathcal{F}_A$, $i \in B \setminus x$ (same solution, cardinality of one more). The graph is directed and acyclic by definition.\\
+	\paragraph{Construction Graph:} Every construction heuristic $A$ defines a construction graph, in which the nodes are all the possible subsets $x \subseteq B$ acceptable for $A$, and the arcs connect all solution pairs such as $(x, x \cup \{i\})$, with $x, x \cup \{i\} \in \mathcal{F}_A$, $i \in B \setminus x$ (same solution, cardinality of one more). The graph is directed and acyclic by definition. Every possible execution of the algorithm is a maximal path (no more outgoing arcs) starting from $\emptyset$.\\
 	
 	\paragraph{Pure and Adaptive:} A constructive algorithm is 
 	\begin{itemize}
@@ -157,7 +155,7 @@
 	\end{itemize}
 	Given a base $y$ and a subset of the search space and base $x$, you can have an element $i$ in the base but not in $y$ that can be feasibly added to $x$. Then there is an element $j$ in $y$ but not $x$ that can be added to $x$ while replacing $j$ with $i$ in the base, all while remaining in the search space.\\
 	
-	\paragraph{Regret-based constructive heuristics:} What if something is good now but bad later? We want to measure the "bad later" with a regret function. Usually such a heuristic consists in:
+	\paragraph{Regret-based constructive heuristics:} What if something is good now but bad later? We want to measure the "bad later" with a regret function. Usually such a heuristic consists of:
 	\begin{itemize}
 		\item Partitioning the choices in classes;
 		\item Compute, for each choice, the basic selection criteria;
@@ -259,7 +257,7 @@
 	
 	\paragraph{Simulated Annealing:} Start from a solution in a neighborhood, extract another solution at random, compute its value, accept it if better, if it's worse accept it with a certain probability dependent on the temperature, usually $e^{-\delta f / T}$, where $\delta f$ is the difference between current and new solution and $T$ is the temperature. The temperature is gradually reduced after each iteration, lowering the probability of accepting worsening solution as time goes on.\\
 	
-	\paragraph{Tabu Search:} It keeps the basic selection criteria of Steepest Descent, removes the termination condition (beware of cycling) and imposes a tabu on already visited solutions. While exploring a neighborhood, at each step it selects the best feasible non-tabu solution. It is potentially inefficient: at step $t$ it needs to check that the solution is new (the evaluation must be efficient) and the number of solutions grows indefinitely, along with the memory occupation. Forbidding solutions can also lead to disconnection of the search graph and/or slow down the exit from attraction basins. Solutions to these problems: forbid "attributes" instead of solutions or give a duration to the prohibition (tabu tenure).\\
+	\paragraph{Tabu Search:} It keeps the basic selection criteria of Steepest Descent, removes the termination condition (beware of cycling!) and imposes a tabu on already visited solutions. While exploring a neighborhood, at each step it selects the best feasible non-tabu solution. It is potentially inefficient: at step $t$ it needs to check that the solution is new (the evaluation must be efficient) and the number of solutions grows indefinitely, along with the memory occupation. Forbidding solutions can also lead to disconnection of the search graph and/or slow down the exit from attraction basins. Solutions to these problems: forbid "attributes" instead of solutions or give a duration to the prohibition (tabu tenure).\\
 	
 	\addcontentsline{toc}{section}{\protect\numberline{}Recombination Algorithms}
 	\section*{Recombination Algorithms}
@@ -284,7 +282,7 @@
 	\paragraph{Path Relinking:} Given a neighborhood $N$ and an exchange heuristic based on it, collect in a reference set $R$ the best solutions generated by the auxiliary heuristic (often this is just a final intensification, that one is the normal heuristic) and for each pair of solutions $x,y \in R$
 	\begin{itemize}
 		\item Build a path from $x$ to $y$ inside the neighborhood, choosing at each step the solution closest to $y$;
-		\item Find the best solution along the path (and improve it);
+		\item Find the best solution along the path (maybe improve it);
 		\item If said solution it's good enough for the reference set, add it to $R$.\\
 	\end{itemize}
 	
@@ -316,7 +314,7 @@
 	
 	\paragraph{Feasibility within encodings:} Sometimes, crossover and mutation can generate encodings of legal but unfeasible solutions, this can lead to inefficiency, ineffectiveness and design problems. Approaches to face this problem can be: 
 	\begin{itemize}
-		\item \textbf{Special encodings and operators:} to avoid/limit unfeasibility; e.g., only encode feasible solutions (such as with symbol strings for partitioning problems, can't get unfeasible with that) or define crossover/mutation operators that maintain feasibility, such as ones which simulate moves on the solutions; we're kinda giving up on abstraction though, going back to heuristics based on neighborhoods;
+		\item \textbf{Special encodings and operators:} to avoid/limit unfeasibility; e.g., only encode feasible solutions (such as with symbol strings for partitioning problems, can't get unfeasible with that) or define crossover/mutation operators that maintain feasibility, such as ones which simulate moves on the solutions; we're kinda giving up on abstraction though and going back to heuristics based on neighborhoods;
 		\item \textbf{Repair procedures:} turn unfeasibility into feasibility; refine the decoder function to repair unfeasible solutions; this allows a bias in favor of feasible encodings and in favor of solutions which are more easily obtained by the repair procedure;
 		\item \textbf{Penalty functions:} allow unfeasibility but discourage it; add a measure of unfeasibility (which has to be defined) to the fitness function, penalizing unfeasible solutions (which often have a better value of the objective function); it's better to use the smallest effective penalty to allow reaching "hidden" feasible solutions while not allowing too many unfeasible solutions to be found, it has to be tuned.\\
 	\end{itemize}
