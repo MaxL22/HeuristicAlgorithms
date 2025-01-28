@@ -3,6 +3,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 
+\setlength\parindent{0pt}
+
 \title{Heuristic Summary}
 \author{Massimo Perego}
 \date{}
@@ -11,14 +13,14 @@
 	
 	\maketitle
 	
+	%TODO:
+	%	Index 
+	%	Computational Complexity Chapter
+	%	Maybe add problem summary?
+	
 	\section*{Algorithm Analysis}
 	
-	\paragraph{Approximation:} To determine how "good" an algorithm is, we can look at how close its solution ($f_A (i)$) is to the optimal one ($f^\ast (i)$). The approximation can be: 
-	\begin{itemize}
-		\item \textbf{Absolute:} the result will never be worse than the optimum by more than a fixed amount
-		\item\textbf{Relative:} the ratio of the approximate result and optimal one will never exceed a certain constant $\alpha$
-	\end{itemize}
-	Starting from these concepts we can define: 
+	\paragraph{Approximation:} To determine how "good" an algorithm is, we can look at how close its solution ($f_A (i)$) is to the optimal one ($f^\ast (i)$): 
 	\begin{itemize}
 		\item \textbf{Absolute difference $\tilde \delta_A(I)$:} the simple difference between solution found and optimal solution
 		$$ \tilde{\delta}_A (I) = f_A (I) - f^\ast (I) $$
@@ -28,6 +30,19 @@
 		$$ \rho_A (I) = \frac{f_A (I)}{f^\ast (I)} $$
 	\end{itemize}
 	These are all for minimization problems, everything is switched for maximization (keep stuff always positive/greater than $1$).\\
+	
+	\paragraph{Worst case analysis:} A compact measure, independent of the instance, is the worst case; the approximation can be: 
+	\begin{itemize}
+		\item \textbf{Absolute:} the result will never be worse than the optimum by more than a fixed amount;
+		\item\textbf{Relative:} the ratio of the approximate result and optimal one will never exceed a certain constant $\alpha$.\\
+	\end{itemize}
+	
+	\paragraph{Beyond the worst case:} Using only the worst case can be \textit{rough}, some alternative approaches are: 
+	\begin{itemize}
+		\item \textbf{Average-case:} assume a probability distribution on the instances and evaluate the expected value of the approximation factor;
+		\item \textbf{Randomization:} the operations of the algorithm depend on some random values, the solution becomes a random variable that can be investigated;
+		\item \textbf{Parametrisation:} prove an approximation guarantee that depends on other parameters of the instances besides the size $n$.\\
+	\end{itemize}
 	
 	\paragraph{Run Time Distribution Diagram RTD:} It shows the probability that the execution time is below a certain time $t$ (axis: runtime-$P$ of solving). To draw it: how many of the instances are solved in that amount of time or less?\\
 	
@@ -134,7 +149,7 @@
 				$$ \varphi_\mu = \varphi_{\max} - \mu (\varphi_{\max} - \varphi_{\min}) = (1 - \mu) \varphi_{\max} + \mu \varphi_{\min} $$
 			\end{itemize}
 		\end{itemize}
-		Randomly choose among the elite.\\
+		We choose randomly among the \textit{elite}.\\
 	\end{itemize}
 	
 	\paragraph{Ant System:} Similar to semi-greedy, but all choices are feasible and the probability of choosing an element is a function which depends on the selection criteria ($\varphi$, which is turned into visibility $\eta$) and some auxiliary information (trail $\tau$), updated after each iteration. To update we have the oblivion parameter $\rho$ and the conversion coefficient $Q$: 
@@ -162,8 +177,7 @@
 	
 	\paragraph{Landscape:} It's the triplet $(X,N,f)$, where $X$ is the search space, $N$ is the neighborhood function and $f$ is the objective function. It is the search graph with node weights given by the objective. The effectiveness of Steepest Descent depends on the landscape, the smoother it is the better the results.\\
 	
-	%TODO Complete
-	\paragraph{Very Large Scale Neighborhood (VLSN):} Larger neighborhoods (generally) yield larger attraction basins, making Steepest Descent more effective, but they take longer to explore. With Very Large Scale Neighborhoods (exponential/high polynomial in $|B|$) we need to limit computational time: if the objective can be optimized without an exhaustive search we can explore the neighborhood heuristically.\\
+	\paragraph{Very Large Scale Neighborhood (VLSN):} Larger neighborhoods (generally) yield larger attraction basins, making Steepest Descent more effective, but they take longer to explore. With Very Large Scale Neighborhoods (exponential/high polynomial in $|B|$) we need to limit computational time: if the objective can be optimized without an exhaustive search we can explore the neighborhood heuristically. We want to parameterize the neighborhood, define a composite move as a set of elementary moves (compatible and commutable) and increase or decrease the number of operations when necessary/sufficient to improve the solution. Finding the optimal solution in such neighborhoods requires solving an auxiliary problem, typically on a matrix or graph.\\
 	
 	\paragraph{Order-first Split-second:} It's a method used for solving partition problems:
 	\begin{itemize}
@@ -176,8 +190,7 @@
 		\item starting from each node, there's an arc to the next if adding that component is feasible for the solution (consider all the elements from the node in which we started, do this starting from each node).\\
 	\end{itemize}
 	
-	%TODO Complete
-	\paragraph{Variable Depth Search VDS:}
+	\paragraph{Variable Depth Search VDS:} A composite move is a sequence of elementary moves. From each solution in the basic neighborhood, make a sequence of moves optimizing each elementary step, but allowing worsening moves and forbidding backwards moves. Terminate when the solution becomes worse than the starting one or all moves are forbidden, return the best solution found along the way. Kinda like a roll-out for exchange heuristics, try all moves (without getting \textit{too bad}, bounded in the original solution) and find out what works best.\\
 	
 	\paragraph{Destroy and Repair:} Also called iterated greedy methods, when the \textit{right} number of exchanges is unknown it's a possible idea to:
 	\begin{itemize}
@@ -207,16 +220,61 @@
 	
 	\section*{Recombination Algorithms}
 	
-	\paragraph{Features of a Good Encoding:} The following properties should be satisfied by a good encoding (decreasing importance):
+	\paragraph{Scatter Search:} It generates a starting population of solutions and improves all of them with an exchange procedure, then it builds a reference set $R = B \cup D$ where $B$ includes the best solutions and $D$ the farthest solution from $B$ (by some definition of distance). For each pair of solutions $(x,y) \in B \times (B \cup D)$: 
+	\begin{itemize}
+		\item Recombine $x$ and $y$, generating $z$
+		\item Improve $z$ with an exchange procedure, obtaining $z'$
+		\item Check if $z'$ belongs to either $B$ or $D$
+		\item Terminate when $R$ is unchanged
+	\end{itemize}
+	Recombining inside $(B \times B)$ intensifies the search, while recombinations inside $(B \times D)$ diversify.\\
+	
+	\paragraph{Recombination:} Usually the solutions $x$ and $y$ are manipulated as subsets; the recombination goes as follows: 
 	\begin{enumerate}
-		\item Each solution should have an encoding
-		\item Different solutions should have different encodings
-		\item Each encoding should correspond to a feasible solution
-		\item Each solution should correspond to the same number of encodings
-		\item The encoding and decoding operations should be efficient
-		\item Locality: small changes to the encoding should induce small changes to the solution
+		\item Start with $z = x \cap y$, they concur, so they \textit{must} be good elements (right?);
+		\item Augment $z$ using elements from $x\setminus y$ or $y \setminus x$, using some criteria;
+		\item If necessary, add external elements from $B \setminus (x \cap y)$;
+		\item If necessary ($z$ is unfeasible), apply an auxiliary exchange heuristic (repair procedure).\\
 	\end{enumerate}
 	
-	%TODO All excercises about encoding/recombination
+	\paragraph{Path Relinking:} Given a neighborhood $N$ and an exchange heuristic based on it, collect in a reference set $R$ the best solutions generated by the auxiliary heuristic (often this is just a final intensification, that one is the normal heuristic) and for each pair of solutions $x,y \in R$
+	\begin{itemize}
+		\item Build a path from $x$ to $y$ inside the neighborhood, choosing at each step the solution closest to $y$;
+		\item Find the best solution along the path (and improve it);
+		\item If said solution it's good enough for the reference set, add it to $R$.\\
+	\end{itemize}
+	
+	\paragraph{Encoding-based Algorithms:} Many recombination heuristics manipulate encodings of the solutions, rather than the solutions themselves, this aims to abstract and distinguish the method from the problem, while building an operator that can work with any problem that uses a certain family of encoding.\\
+	
+	\paragraph{Features of a Good Encoding:} The following properties should be satisfied by a good encoding (decreasing importance):
+	\begin{enumerate}
+		\item Each solution should have an encoding;
+		\item Different solutions should have different encodings;
+		\item Each encoding should correspond to a feasible solution;
+		\item Each solution should correspond to the same number of encodings;
+		\item The encoding and decoding operations should be efficient;
+		\item Locality: small changes to the encoding should induce small changes to the solution.\\
+	\end{enumerate}
+	
+	\paragraph{Usual encodings:} Some common encodings are:
+	\begin{itemize}
+		\item \textbf{Incidence vector:} A binary vector where each element corresponds to an item in the ground set and the value determines whether the object is in the solution or not; e.g., KP, if the value is 1 the element is in the knapsack;
+		\item \textbf{Symbol strings:} When the ground set is divided into disjoint components and the solution must take one element from each component, we can define an alphabet for each component, with symbols corresponding to each element that can be part of that component in the solution; e.g., in the PMSP, we define an alphabet for each machine, containing a symbol for all possible tasks, whose inclusion in the solution means that said task is assigned to that specific machine;
+		\item \textbf{Permutations:} If the solution can be expressed as permutation of a set, this can serve as an encoding; e.g., in the TSP, the solution is a permutation of nodes.\\
+	\end{itemize}
+	
+	\paragraph{Genetic Algorithm:} The most famous encoding algorithm, it builds and encodes a population and repeatedly applies: 
+	\begin{itemize}
+		\item \textbf{Selection:} generate a new population starting from the current one, extracting elements with probability proportional to the fitness (the selection can either be proportional, simple probability related to the fitness value, rank, probability related to the "position in the fitness line", or tournament selection, extracting a number of subsets and choosing the best individual from each subset);
+		\item \textbf{Crossover:} combines 2 or more individuals to generate other, usually by splitting and swapping parts of the encoding;
+		\item \textbf{Mutation:} modifies an individual to generate a similar one, the modification usually depends on the encoding, e.g., binary vector: flip some bits, Symbol strings: substitute some symbols at random, Permutations: swap elements, in some way. \\
+	\end{itemize}
+	
+	\paragraph{Feasibility within encodings:} Sometimes, crossover and mutation can generate encodings of legal but unfeasible solutions, this can lead to inefficiency, ineffectiveness and design problems. Approaches to face this problem can be: 
+	\begin{itemize}
+		\item \textbf{Special encodings and operators:} to avoid/limit unfeasibility; e.g., only encode feasible solutions (such as with symbol strings for partitioning problems, can't get unfeasible with that) or define crossover/mutation operators that maintain feasibility, such as ones which simulate moves on the solutions; we're kinda giving up on abstraction though, going back to heuristics based on neighborhoods;
+		\item \textbf{Repair procedures:} turn unfeasibility into feasibility; refine the decoder function to repair unfeasible solutions; this allows a bias in favor of feasible encodings and in favor of solutions which are more easily obtained by the repair procedure;
+		\item \textbf{Penalty functions:} allow unfeasibility but discourage it; add a measure of unfeasibility (which has to be defined) to the fitness function, penalizing unfeasible solutions (which often have a better value of the objective function); it's better to use the smallest effective penalty to allow reaching "hidden" feasible solutions while not allowing too many unfeasible solutions to be found, it has to be tuned.\\
+	\end{itemize}
 	
 \end{document}
