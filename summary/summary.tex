@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
 \usepackage{amssymb}
+\usepackage[autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
 
 \setlength\parindent{0pt}
 
@@ -13,11 +15,47 @@
 	
 	\maketitle
 	
-	%TODO:
-	%	Index 
-	%	Computational Complexity Chapter
-	%	Maybe add problem summary?
+	\tableofcontents
 	
+	\newpage
+	
+	\addcontentsline{toc}{section}{\protect\numberline{}TL;DR: Problems}
+	\section*{TL;DR: Problems}
+	
+	\paragraph{Combinatorial Optimization:} A problem is a CO problem if we need to optimize an objective function and the solution is a subset of a finite ground set, from which the search space is defined.\\
+	
+	
+	
+	\paragraph{Knapsack Problem KP:} From a set of object, select the subset with maximal value that stays within a weight constraint.\\
+	
+	\paragraph{Maximum Diversity Problem MDP:} Inside a metric space, select the $k$ points with the maximum pairwise distance.\\
+	
+	\paragraph{Bin Packing Problem BPP:} Put a set of objects into the minimum number of containers, given the capacity of each container.\\
+	
+	\paragraph{Parallel Machine Scheduling Problem PMSP:} Divide a set of tasks, each with its own length, among a set of machines, minimizing the maximum length of a singular machine.\\
+	
+	\paragraph{Max-Sat:} Given a CNF, assign truth values to the logical variables in a way that satisfies the maximum weight subset of its logical clauses.\\
+	
+	\paragraph{Set Covering Problem SCP:} Given a binary matrix, select a subset of column of minimum cost covering all rows at least once.\\
+	
+	\paragraph{Set Packing Problem:} Given a binary matrix, select the subset of non-conflicting columns with maximum value (each row covered by at most one column).\\
+	
+	\paragraph{Set Partitioning Problem SPP:} Given a binary matrix, select a subset of non-conflicting column of minimum cost, covering each row (exactly one column for each row).\\
+	
+	\paragraph{Vertex Cover Problem VCP:} Given an undirected graph, select the subset of vertices of minimum weight/cardinality such that each edge is incident to at least one vertex in the solution.\\
+	
+	\paragraph{Maximum Clique Problem:} Given an undirected graph, find the subset of pairwise adjacent vertices of maximum weight (heaviest clique possible). \\
+	
+	\paragraph{Maximum Independent Set Problem:} Given an undirected graph, find the subset of pairwise non-adjacent vertices of maximum weight (heaviest set of independent vertices).\\
+	
+	\paragraph{Traveling Salesman Problem TSP:} Given a directed graph, find the Hamiltonian circuit of minimum weight, i.e., a circuit such that it visits each node exactly once (weight on the arcs, obv).\\
+	
+	\paragraph{Capacitated Minimum Spanning Tree Problem CMSTP:} Starting from a root, find the minimum spanning tree such that each branch respects a capacity (number/sum of weight of the arcs).\\
+	
+	\paragraph{Vehicle Routing Problem VRP:} Given a directed graph, with a starting node, select the set of circuits such that each node is visited exactly once and each circuit respects the capacity.\\
+	
+	
+	\addcontentsline{toc}{section}{\protect\numberline{}Algorithm Analysis}
 	\section*{Algorithm Analysis}
 	
 	\paragraph{Approximation:} To determine how "good" an algorithm is, we can look at how close its solution ($f_A (i)$) is to the optimal one ($f^\ast (i)$): 
@@ -41,7 +79,8 @@
 	\begin{itemize}
 		\item \textbf{Average-case:} assume a probability distribution on the instances and evaluate the expected value of the approximation factor;
 		\item \textbf{Randomization:} the operations of the algorithm depend on some random values, the solution becomes a random variable that can be investigated;
-		\item \textbf{Parametrisation:} prove an approximation guarantee that depends on other parameters of the instances besides the size $n$.\\
+		\item \textbf{Parametrisation:} prove an approximation guarantee that depends on other parameters of the instances besides the size $n$; we add parameter $k$ and the time can be expressed as $T(n,k)$, dependent on both, the problem could be polynomial in $n$ but exponential in $k$; $k$ could be part of the input or the solution (in which case we'll know it only \textit{a posteriori}, but an estimate could be available); 
+		\item \textbf{Kernelization:} transform all instances of the problem into simpler ones, instead of instances of another problem; it becomes a simpler problem to solve, allowing it to be solved faster (either exactly or heuristically) or to prove that there exists an optimal solution  and maybe know which elements are certainly in said solution.\\
 	\end{itemize}
 	
 	\paragraph{Run Time Distribution Diagram RTD:} It shows the probability that the execution time is below a certain time $t$ (axis: runtime-$P$ of solving). To draw it: how many of the instances are solved in that amount of time or less?\\
@@ -70,6 +109,7 @@
 	\end{enumerate}
 	If the probability is low enough the difference is significant and if $W^+ > W^-$ then the first algorithm is better than the second, or vice versa.\\
 	
+	\addcontentsline{toc}{section}{\protect\numberline{}Constructive Heuristics}
 	\section*{Constructive Heuristics}
 	
 	\paragraph{Construction Graph:} Every construction heuristic $A$ defines a construction graph, in which the nodes are all the possible subsets $x \subseteq B$ acceptable for $A$, and the arcs connect all solution pairs such as $(x, x \cup \{i\})$, with $x, x \cup \{i\} \in \mathcal{F}_A$, $i \in B \setminus x$ (same solution, cardinality of one more). The graph is directed and acyclic by definition.\\
@@ -130,6 +170,7 @@
 	
 	\paragraph{Destructive Heuristics:} Start with the full ground set and remove one element at a time, always remaining in the search space and while maximizing the selection criteria. Usually the solutions are much smaller than the ground set, so they take too long , but it might be useful to append a destructive heuristic to constructive solutions which might have redundant elements.\\
 	
+	\addcontentsline{toc}{section}{\protect\numberline{}Constructive Metaheuristics}
 	\section*{Constructive Metaheuristics}
 	
 	\paragraph{Adaptive Research Technique ART:} Set a number of iterations $\ell$ for a basic constructive heuristic, at each iteration forbid elements inside the solution with probability $\pi$ for a number of iteration $L$. When wanting to include an element, check that the current iteration is distant enough from the last ban of said element, i.e., if $t > T_i + L$ where $t$ is the current iteration and $T$ is the vector containing the tabu attribute for each element.\\
@@ -160,7 +201,8 @@
 	\end{cases}
 	$$
 	where $f(x)$ is the value of the final solution. We multiply all trails by $(1-\rho)$ and then add $\rho Q f(x)$ to the elements in the current solution, since they're "promising".\\
-	
+
+	\addcontentsline{toc}{section}{\protect\numberline{}Exchange Heuristics}
 	\section*{Exchange Heuristics}
 	
 	\paragraph{Neighborhood:} $N: X \rightarrow 2^X$, a neighborhood is a function which associates each feasible solution to a subset of feasible solutions. We can define a neighborhood based on: 
@@ -198,6 +240,7 @@
 		\item complete it with a constructive (repair) heuristic.\\
 	\end{itemize}
 	
+	\addcontentsline{toc}{section}{\protect\numberline{}Exchange Metaheuristics}
 	\section*{Exchange Metaheuristics}
 	
 	\paragraph{Iterated Local Search ILS:} At each iteration, it perturbates the last accepted solution to create a new starting point, finds the local optima from there and then it decides whether to accept it or not. The perturbation procedure (ideally) allows to move out of the attraction basin of a local optima (not too strong or it's a random restart, not too weak or it risks remaining in the same basin) and the acceptance procedure evaluates whether the result found is a promising starting point for the following iterations (accepting only improving solution favors intensification, accepting any solution favors diversification, has to be tuned). \\
@@ -218,6 +261,7 @@
 	
 	\paragraph{Tabu Search:} It keeps the basic selection criteria of Steepest Descent, removes the termination condition (beware of cycling) and imposes a tabu on already visited solutions. While exploring a neighborhood, at each step it selects the best feasible non-tabu solution. It is potentially inefficient: at step $t$ it needs to check that the solution is new (the evaluation must be efficient) and the number of solutions grows indefinitely, along with the memory occupation. Forbidding solutions can also lead to disconnection of the search graph and/or slow down the exit from attraction basins. Solutions to these problems: forbid "attributes" instead of solutions or give a duration to the prohibition (tabu tenure).\\
 	
+	\addcontentsline{toc}{section}{\protect\numberline{}Recombination Algorithms}
 	\section*{Recombination Algorithms}
 	
 	\paragraph{Scatter Search:} It generates a starting population of solutions and improves all of them with an exchange procedure, then it builds a reference set $R = B \cup D$ where $B$ includes the best solutions and $D$ the farthest solution from $B$ (by some definition of distance). For each pair of solutions $(x,y) \in B \times (B \cup D)$: 
