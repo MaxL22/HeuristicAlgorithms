@@ -42,8 +42,8 @@ $$ \Delta^+_A (x) = \left\{i \in B \setminus x : \, x \cup \left\{i\right\} \in 
 The algorithm visits a \textbf{sequence of subsets} $\emptyset = x^{(0)} \subset \, ... \, \subset x^{(t_f)}$ terminating
 \begin{itemize}
 	\item in an \textbf{optimal solution} $x^\ast \in X^\ast$ (Example: MST problem, both with $\mathcal{F}_{Kruskal}$ and $\mathcal{F}_{Prim}$)
-	\item in a \textbf{nonoptimal feasible solution} $x \in X$ (Example: KP, MDP, etc...)
-	\item in an \textbf{unfeasible subset} $x'$ (Example: TSP on a noncomplete graph)
+	\item in a \textbf{non-optimal feasible solution} $x \in X$ (Example: KP, MDP, etc...)
+	\item in an \textbf{unfeasible subset} $x'$ (Example: TSP on a non-complete graph)
 \end{itemize}
 
 \newpage
@@ -77,7 +77,7 @@ Different behaviors are possible
 Ideally, the \textbf{search space} $\mathcal{F}_A$ should \textbf{include}
 \begin{itemize}
 	\item the \textbf{empty subset}: $\emptyset \in \mathcal{F}_A$ ($A$ starts from $\emptyset$)
-	\item all \textbf{feasible solutions}: $X \subseteq \mathcal{F}_A$ (maybe excluding provably nonoptimal solutions)
+	\item all \textbf{feasible solutions}: $X \subseteq \mathcal{F}_A$ (maybe excluding provably non-optimal solutions)
 	\item \textbf{only subsets accessible from} $\emptyset$ (inaccessible subsets are useless)
 \end{itemize}
 
@@ -100,7 +100,7 @@ and could be $\np$-complete. In that case, one needs to \textbf{relax the search
 Including a partial solution is like asking "is there a solution that includes this subset?" and could be an $\np$-complete problem, not always polynomial.\\
 
 If the \textbf{objective function} can be extended from $X$ to $\mathcal{F}_A$, it looks natural to use the objective function as the \textbf{selection criteria}
-$$ \phi_A (i,x) = f \left(x \cup \left\{i\right\} \right)$$
+$$ \varphi_A (i,x) = f \left(x \cup \left\{i\right\} \right)$$
 
 \newpage
 
@@ -133,12 +133,12 @@ This property holds in $x^{(0)} = \emptyset$, but is usually lost at some step $
 A constructive algorithm performs at \textbf{most} $n = |B|$ \textbf{steps} (can't add more element than the whole ground set) consisting of 
 \begin{enumerate}
 	\item the \textbf{construction} of $\Delta_A^+ (x)$
-	\item the \textbf{evaluation} of $\phi_A (i,x)$ for each $i \in \Delta_A^+(x)$
-	\item the \textbf{selection} of the element $i$ minimizing $\phi_A (i,x)$
+	\item the \textbf{evaluation} of $\varphi_A (i,x)$ for each $i \in \Delta_A^+(x)$
+	\item the \textbf{selection} of the element $i$ minimizing $\varphi_A (i,x)$
 	\item the \textbf{update} of $x$ (and auxiliary data structures)
 \end{enumerate}
 In general, the \textbf{complexity} is a \textbf{polynomial} of rather low order, dominated by the first two components
-$$ T_A (n) \in O\left(n \left(T_{\Delta_A^+} (n) + T_{\phi_A} (n)\right)\right) $$
+$$ T_A (n) \in O\left(n \left(T_{\Delta_A^+} (n) + T_{\varphi_A} (n)\right)\right) $$
 
 \newpage
 
@@ -168,7 +168,7 @@ It is fundamental to \textbf{study the problem} before the algorithm.\\
 \begin{itemize}
 	\item the \textbf{objective function} is \textbf{extended} from $X$ to $\mathcal{F}_A$
 	\item the \textbf{selection criteria is the objective function}
-	$$ \phi_A (i,x) = f\left(x \cup \left\{i\right\}\right) $$
+	$$ \varphi_A (i,x) = f\left(x \cup \left\{i\right\}\right) $$
 \end{itemize}
 This means that instead of minimizing the selection criteria (which is generic) I use the value of the objective function. It's a greedy algorithm, sometimes can be a good idea.\\
 
@@ -1136,7 +1136,7 @@ Some selection criteria aim explicitly to \textbf{leave larger sets of good choi
 	
 	\item compute a \textbf{basic selection criteria} for all choices
 	
-	\item compute \textbf{for each class the regret}, i.e. the \textbf{difference} between either
+	\item compute \textbf{for each class the regret}, i.e., the \textbf{difference} between either
 	\begin{itemize}
 		\item the \textbf{second-best choice} or
 		\item the \textbf{average of the other choices} (possibly weighted)

@@ -1,5 +1,5 @@
 \section{Computational Complexity}
-\paragraph{Problems:} informally, a problem is a \textbf{question} on a \textbf{system} of \textbf{mathematical objects}. The same question can often be asked on many similar systems
+\paragraph{Problems:} Informally, a problem is a \textbf{question} on a \textbf{system} of \textbf{mathematical objects}. The same question can often be asked on many similar systems
 \begin{itemize}
 	\item an \textbf{instance} $i \in I$ is each specific system concerned by the question 
 	\item a \textbf{solution} $s \in S$ is an answer corresponding to one of the instances
@@ -107,7 +107,7 @@ In general, the \textbf{heuristic} algorithms are \textbf{polynomial} algorithms
 \newpage
 
 \subsection{Problem transformations and reductions}
-Problems can be \textbf{transformed} into other problems (\hyperref[I5]{Interlude 5}). A \textbf{relation} among problems allows to design algorithms: 
+Problems can be \textbf{transformed} into other problems (\hyperref[I5]{\texttt{Interlude 5}}). A \textbf{relation} among problems allows designing algorithms: 
 \begin{itemize}
 	\item by \textbf{transformation}: 
 	\begin{enumerate}
@@ -135,8 +135,8 @@ The worst-case complexity \textbf{cancels} all information on the \textbf{easier
 
 What if the \textbf{hard} instances are \textbf{rare} in practice? To \textbf{compensate} one can investigate: 
 \begin{itemize}
-	\item \textbf{parameterized complexity}, that is introduce some \textbf{other relevant parameter} $k$ (besides the size $n$) and express the \textbf{time as} $T(n,k)$
-	\item \textbf{average-case complexity}, that is assume a \textbf{probability distribution} on $I$ and express the \textbf{time} as the \textbf{expected value}
+	\item \textbf{parameterized complexity}, that is introducing some \textbf{other relevant parameter} $k$ (besides the size $n$) and express the \textbf{time as} $T(n,k)$
+	\item \textbf{average-case complexity}, that is assuming a \textbf{probability distribution} on $I$ and express the \textbf{time} as the \textbf{expected value}
 	$$ T(n) = E \left[T(i) | i \in I_n \right] $$
 \end{itemize}
 
@@ -152,12 +152,12 @@ Some algorithms are \textbf{exponential} in $k$ an \textbf{polynomial} in $n$ an
 
 \newpage
 
-\paragraph{Nature of $k$:} it could be part of the \textbf{input}: 
+\paragraph{Nature of $k$:} It could be part of the \textbf{input}: 
 \begin{itemize}
-	\item a \textbf{numerical constant} (e.g. the capacity of the KP)
+	\item a \textbf{numerical constant} (e.g., the capacity of the KP)
 	\item the \textbf{maximum number of literals} per formula in logic function problems
 	\item the \textbf{number on nonzero elements} in numerical matrix problems
-	\item the \textbf{maximum degree}, \textbf{the diameter}, etc... in graph problems
+	\item the \textbf{maximum degree}, \textbf{the diameter}, etc. in graph problems
 \end{itemize}
 one knows \textit{a priori} whether the algorithm is efficient on a given instance.\\
 
@@ -178,7 +178,7 @@ for a fixed $k$, this algorithm is polynomial (but in general very slow).\\
 \newpage
 
 \textbf{Bounded tree search:} a better algorithm can be based on the following useful property
-$$ x \cap (u,v) \neq \emptyset \text{ for all } x \in X, \, (u,v) \in E $$
+$$ x \cap (u,v) \neq \emptyset \; \text{ for all } \; x \in X, \, (u,v) \in E $$
 Any feasible solution \textbf{includes} at least one \textbf{extreme vertex} for each edge.\\
 Choose any edge (there can be "good" and "bad" edges), only one must be in the solution.\\
 
@@ -193,14 +193,14 @@ BTS algorithm to find $x$ with $|x| \leq k$:
 	\item otherwise go to step 1
 \end{enumerate}
 The \textbf{complexity} is $T(n,m,k) \in \Theta(2^k m)$, polynomial in $n$ ($m < n^2$). \\
-For $n>>2$, this algorithm is much more efficient than the naive one.\\
+For $n \gg 2$, this algorithm is much more efficient than the naive one.\\
 
 \newpage
 
 \subsubsection{Kernelization (or "problem reduction")}
 Kernelization \textbf{transforms} all \textbf{instances} of $P$ into \textbf{simpler} instances of $P$ (also known as "problem reduction"), instead of instances of another problem $Q$.\\
 
-Quite often, in fact, useful \textbf{properties} allow to \textbf{prove that}
+Quite often, in fact, useful \textbf{properties} allow \textbf{proving that}
 \begin{itemize}
 	\item there exists an optimal solution (not every optimal solution, but at least one) \textbf{not including} certain elements of $B \implies$ such elements can be \textbf{removed}
 	\item there exists an optimal solution \textbf{including} certain elements of $B \implies$ such elements can be set \textbf{apart and added later}
@@ -217,7 +217,7 @@ Possible useful \textbf{outcomes} are
 
 \newpage
 
-\paragraph{Kernelization of VCP:} if $\delta_v \geq k+1$ (the degree of $v$, number of vertices), vertex $v$ belongs to any feasible solution of value $\leq k$ (you need to cover a lot of edges, this covers a lot of edges; by contradiction, you can't cover $k+1$ edges with less than this single vertex).\\
+\paragraph{Kernelization of VCP:} If $\delta_v \geq k+1$ (the degree of $v$, number of vertices), vertex $v$ belongs to any feasible solution of value $\leq k$ (you need to cover a lot of edges, this covers a lot of edges; by contradiction, you can't cover $k+1$ edges with less than this single vertex).\\
 
 Kernelization algorithm to \textbf{keep} only \textbf{vertices of solution} $x$ with $|x| \leq k$
 \begin{itemize}
@@ -344,7 +344,7 @@ Therefore, the worst-case estimation is also good on average.\\
 
 \textbf{Metaheuristics} use random steps or memory
 \begin{itemize}
-	\item the \textbf{complexity} is \textbf{well defined} for \textbf{single components} of the algorithm
+	\item the \textbf{complexity} is \textbf{well-defined} for \textbf{single components} of the algorithm
 	\item the \textbf{overall complexity} is \textbf{not clearly defined}
 	\begin{itemize}
 		\item in \textbf{theory}, it could extend \textbf{indefinitely} (but the pseudo-random number generator or the memory configurations would yield an infinite loop)

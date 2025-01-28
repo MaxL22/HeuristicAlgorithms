@@ -78,12 +78,12 @@
 		\item \textbf{Average-case:} assume a probability distribution on the instances and evaluate the expected value of the approximation factor;
 		\item \textbf{Randomization:} the operations of the algorithm depend on some random values, the solution becomes a random variable that can be investigated;
 		\item \textbf{Parametrization:} prove an approximation guarantee that depends on other parameters of the instances besides the size $n$; we can add a parameter $k$ and the time can be expressed as $T(n,k)$, making it dependent on both; the problem could be polynomial in $n$ but exponential in $k$; $k$ could be part of the input or the solution (in which case we'll know it only \textit{a posteriori}, but an estimate could be available); 
-		\item \textbf{Kernelization:} transform all instances of the problem into simpler ones, instead of instances of another problem; it becomes a simpler problem to solve, allowing it to be solved faster (either exactly or heuristically) or to prove that there exists an optimal solution  and maybe know which elements are certainly in said solution.\\
+		\item \textbf{Kernelization:} transform all instances of the problem into simpler ones, instead of instances of another problem; it becomes a simpler problem to solve, allowing it to be solved faster (either exactly or heuristically) or to prove that there exists an optimal solution  and maybe know which elements are certainly in or out of said solution.\\
 	\end{itemize}
 	
 	\paragraph{Run Time Distribution Diagram RTD:} It shows the probability that the execution time is below a certain time $t$ (axis: runtime-$P$ of solving). To draw it: how many of the instances are solved in that amount of time or less?\\
 	
-	\paragraph{Scaling Diagram:} Describes the dependence of the time on the size (axis: instance size-execution time). Logarithmic scale for the time shows that the algorithm is exponential, both axis logarithmic can show that the algorithm is polynomial. To find the coefficient: choose two points and 
+	\paragraph{Scaling Diagram:} Describes the dependence of the time on the size (axis: instance size-execution time). A straight line with a logarithmic scale for the time only shows that the algorithm is exponential, if both axis are logarithmic it shows that the algorithm is polynomial. To find the coefficient: choose two points and 
 	$$ \left(\frac{s_1}{s_2}\right)^\alpha \approx \frac{T_1}{T_2}$$
 	find $\alpha$, with $s_1, s_2$ and $T_1, T_2$ instance sizes and times respectively.\\
 	
@@ -110,11 +110,11 @@
 	\addcontentsline{toc}{section}{\protect\numberline{}Constructive Heuristics}
 	\section*{Constructive Heuristics}
 	
-	\paragraph{Construction Graph:} Every construction heuristic $A$ defines a construction graph, in which the nodes are all the possible subsets $x \subseteq B$ acceptable for $A$, and the arcs connect all solution pairs such as $(x, x \cup \{i\})$, with $x, x \cup \{i\} \in \mathcal{F}_A$, $i \in B \setminus x$ (same solution, cardinality of one more). The graph is directed and acyclic by definition. Every possible execution of the algorithm is a maximal path (no more outgoing arcs) starting from $\emptyset$.\\
+	\paragraph{Construction Graph:} Every construction heuristic $A$ defines a construction graph, in which the nodes are all the possible subsets $x \subseteq B$ acceptable for $A$, and the arcs connect all solution pairs such as $(x, x \cup \{i\})$, with $x, x \cup \{i\} \in \mathcal{F}_A$, $i \in B \setminus x$ (same solution, cardinality of one more). The graph is directed and acyclic by definition. Every possible execution of the algorithm is a maximal path (ends in a node with no more outgoing arcs) starting from $\emptyset$.\\
 	
 	\paragraph{Pure and Adaptive:} A constructive algorithm is 
 	\begin{itemize}
-		\item \textbf{Pure:} if the selection criterion depends only on the new element $i$;
+		\item \textbf{Pure:} if the selection criterion $\varphi_A$ depends only on the new element $i$;
 		\item \textbf{Adaptive:} if $\varphi_A$ depends both on $i$ and the current solution.\\
 	\end{itemize}
 	
@@ -136,9 +136,8 @@
 	\begin{itemize}
 		\item \textbf{Heredity axiom:} if $x \in \mathcal{F}$ and $y \subset x$ then $y \in \mathcal{F}$. Any acceptable subset can be built by adding elements in any order.\\
 	\end{itemize}
-	The constructive algorithm finds the optimal solution if $(B, \mathcal{F})$ is a matroid embedding.\\
 	
-	The \textbf{optimality} of the greedy algorithm can be proven for a greedoid with strengthened exchange axiom: 
+	\paragraph{Optimality of the greedy/constructive algorithm:} The constructive algorithm finds the optimal solution if $(B, \mathcal{F})$ is a matroid embedding. The optimality of the greedy algorithm can also be proven for a greedoid with strengthened exchange axiom: 
 	\begin{itemize}
 		\item \textbf{Strong exchange axiom:}
 		$$ 
@@ -164,7 +163,7 @@
 	\end{itemize}
 	This works well when we know we'll have to pick from each class, and we fear being stuck with a much worse choice later.\\
 	
-	\paragraph{Roll-out heuristics:} Also known as single-step look-ahead constructive heuristics, at each step of the basic heuristic look ahead at the next step and compute the solution for each possibility. The complexity remains polynomial but much larger. It can be extended to multiple steps, worsening further the complexity.\\
+	\paragraph{Roll-out heuristics:} Also known as single-step look-ahead constructive heuristics, at each step of the basic heuristic look ahead at the next step and compute the solution for each possibility. The complexity remains polynomial but much larger (it increases by the cardinality of the base set squared). It can be extended to multiple steps, worsening further the complexity.\\
 	
 	\paragraph{Destructive Heuristics:} Start with the full ground set and remove one element at a time, always remaining in the search space and while maximizing the selection criteria. Usually the solutions are much smaller than the ground set, so they take too long , but it might be useful to append a destructive heuristic to constructive solutions which might have redundant elements.\\
 	
@@ -230,7 +229,7 @@
 		\item starting from each node, there's an arc to the next if adding that component is feasible for the solution (consider all the elements from the node in which we started, do this starting from each node).\\
 	\end{itemize}
 	
-	\paragraph{Variable Depth Search VDS:} A composite move is a sequence of elementary moves. From each solution in the basic neighborhood, make a sequence of moves optimizing each elementary step, but allowing worsening moves and forbidding backwards moves. Terminate when the solution becomes worse than the starting one or all moves are forbidden, return the best solution found along the way. Kinda like a roll-out for exchange heuristics, try all moves (without getting \textit{too bad}, bounded in the original solution) and find out what works best.\\
+	\paragraph{Variable Depth Search VDS:} A composite move is a sequence of elementary moves. From each solution in the basic neighborhood, make a sequence of moves optimizing each elementary step, while allowing worsening moves and forbidding backwards moves. Terminate when the solution becomes worse than the starting one or all moves are forbidden, return the best solution found along the way. Kinda like a roll-out for exchange heuristics, try all moves (without getting \textit{too bad}, it's bounded in the original solution) and find out what works best.\\
 	
 	\paragraph{Destroy and Repair:} Also called iterated greedy methods, when the \textit{right} number of exchanges is unknown it's a possible idea to:
 	\begin{itemize}
@@ -257,7 +256,7 @@
 	
 	\paragraph{Simulated Annealing:} Start from a solution in a neighborhood, extract another solution at random, compute its value, accept it if better, if it's worse accept it with a certain probability dependent on the temperature, usually $e^{-\delta f / T}$, where $\delta f$ is the difference between current and new solution and $T$ is the temperature. The temperature is gradually reduced after each iteration, lowering the probability of accepting worsening solution as time goes on.\\
 	
-	\paragraph{Tabu Search:} It keeps the basic selection criteria of Steepest Descent, removes the termination condition (beware of cycling!) and imposes a tabu on already visited solutions. While exploring a neighborhood, at each step it selects the best feasible non-tabu solution. It is potentially inefficient: at step $t$ it needs to check that the solution is new (the evaluation must be efficient) and the number of solutions grows indefinitely, along with the memory occupation. Forbidding solutions can also lead to disconnection of the search graph and/or slow down the exit from attraction basins. Solutions to these problems: forbid "attributes" instead of solutions or give a duration to the prohibition (tabu tenure).\\
+	\paragraph{Tabu Search:} It keeps the basic selection criteria of Steepest Descent, removes the termination condition (beware of cycling!) and imposes a tabu on already visited solutions. While exploring a neighborhood, at each step it selects the best feasible non-tabu solution. It is potentially inefficient: at step $t$ it needs to check that the solution is new (the evaluation must be efficient) and the number of solutions grows indefinitely, along with the memory occupation. Forbidding solutions can also lead to disconnection of the search graph and/or slow down the exit from attraction basins. Solutions to these problems: forbid "attributes" instead of solutions or/and give a duration to the prohibition (tabu tenure).\\
 	
 	\addcontentsline{toc}{section}{\protect\numberline{}Recombination Algorithms}
 	\section*{Recombination Algorithms}

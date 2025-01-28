@@ -25,7 +25,7 @@ The effectiveness of a heuristic optimization algorithm $A$ is measured by the \
 \begin{itemize}
 	\item \textbf{Absolute difference}
 	$$ \tilde{\delta}_A (i) = |f_A(I) - f^\ast (i)| \geq 0 $$
-	used rarely and only when the objective is a pure number. This yields a small error an small instances and big numbers on big instances so it could be not significant.\\
+	used rarely and only when the objective is a pure number. This yields a small error a small instances and big numbers on big instances so it could be not significant.\\
 	\item \textbf{Relative difference}
 	$$ \delta_A (i) = \frac{|f_A (i) - f^\ast (i)|}{f^\ast (i)} \geq 0$$
 	frequent in experimental analysis (usually as a percent ratio).\\
@@ -55,7 +55,7 @@ For other algorithms, the guarantee \textbf{depends} on the \textbf{instance siz
 $$ \rho_A (i) \leq \alpha_A (n) \text{ for each } i \in I_n, \, n \in \mathbb{N} $$
 The approximation guarantee can change in relation to the instance size, (twice the size, twice as "less optimum" for example) so the guarantee can be expressed via a function.\\
 
-Effectiveness can be \textbf{independent from size} (contrary to efficiency).\\
+Effectiveness can be \textbf{independent of size} (contrary to efficiency).\\
 
 \newpage
 
@@ -143,7 +143,7 @@ If all worst cases are patched, the approximation guarantee improves.\\
 \paragraph{The TSP under the triangle inequality:} Consider the \textbf{TSP} with the additional (rather common) \textbf{assumptions} that
 \begin{itemize}
 	\item graph $G = (N, A)$ is \textbf{complete}
-	\item cost $c$ is \textbf{nonnegative}, \textbf{symmetric} and \textbf{satisfies} the \textbf{triangle inequality}
+	\item cost $c$ is \textbf{non-negative}, \textbf{symmetric} and \textbf{satisfies} the \textbf{triangle inequality}
 	$$ c_{ij} = c_{ji} \;\; \forall i,j \in N \;\; \text{ and } \;\; c_{ij} + c_{jk} \leq c_{ik} \;\; \forall i,j,k \in N $$
 	i.e. the road works equally both ways and there can't be roads that connect $i$ and $j$ and subsequently $k$ shorter than the road $ik$ (the costs can form a triangle)
 \end{itemize}
@@ -166,11 +166,11 @@ Example:
 
 \newpage
 
-The cost of the hamiltonian circuit will be at most equal to twice the spanning tree, which is at most equal to the optimal hamiltonian circuit. The \textbf{cost} is at most \textbf{twice the optimum}. \\
+The cost of the Hamiltonian circuit will be at most equal to twice the spanning tree, which is at most equal to the optimal Hamiltonian circuit. The \textbf{cost} is at most \textbf{twice the optimum}. \\
 
 To do the last step you can just look at the path and skip already seen nodes, since it's a complete graph there will be a path to the next unseen node and, as stated by the triangle inequality, it will certainly be $\leq$ than before. \\
 
-This way the result is exactly an hamiltonian circuit, with a cost smaller than the double tree, which has a cost equal to twice the tree, which itself has a cost that smaller than the optimum.\\
+This way the result is exactly a Hamiltonian circuit, with a cost smaller than the double tree, which has a cost equal to twice the tree, which itself has a cost that smaller than the optimum.\\
 
 The double-tree algorithm is \textbf{2-approximated}:
 \begin{enumerate}
@@ -239,25 +239,25 @@ As usual, the worst-case approach is rough: some algorithms often have a good pe
 
 The \textbf{alternative approaches} are similar to the ones used for complexity
 \begin{itemize}
-	\item \textbf{parametrisation:} prove an \textbf{approximation guarantee} that \textbf{depends} on \textbf{other parameters} of the instances besides the size $n$
+	\item \textbf{parametrization:} prove an \textbf{approximation guarantee} that \textbf{depends} on \textbf{other parameters} of the instances besides the size $n$
 	\item \textbf{average-case:} assume a \textbf{probability distribution} on the \textbf{instances} and evaluate the \textbf{expected value} of the approximation factor; the probability affects only the approximation factor, which is reasonable to assume can vary among instances (the algorithm could have a bad performance only on rare instances)
 \end{itemize}
 
 but there is at least \textbf{another approach}: 
 \begin{itemize}
 	\item \textbf{randomization:} the \textbf{operations} of the algorithm \textbf{depend} not only on the instance, but \textbf{also on pseudo-random numbers}, so that the \textbf{solution} becomes a \textbf{random variable} which can be investigated (the time complexity could also be random, but usually is not).\\ 
-	Random numbers are used to make decisions inside the algorithm, running it several time provides different results, the distribution of such results can be studied, usually in relation to the random seed used for each specific iteration. \\
+	Random numbers are used to make decisions inside the algorithm, running it several times provides different results, the distribution of such results can be studied, usually in relation to the random seed used for each specific iteration. \\
 \end{itemize}
 
 \newpage
 
 \subsubsection{Randomized approximation algorithms}
-For a randomised algorithm $A$, $f_A (i , \omega)$ and $\rho_A (i , \omega)$ are random variables depending on the pseudo-random number seed $\omega$.\\
+For a randomized algorithm $A$, $f_A (i , \omega)$ and $\rho_A (i , \omega)$ are random variables depending on the pseudo-random number seed $\omega$.\\
 
-A randomised approximation algorithm has an approximation ratio whose expected value is limited by a constant
+A randomized approximation algorithm has an approximation ratio whose expected value is limited by a constant
 $$ E \left[\rho_A (i, \omega)\right] \leq \alpha_A \text{ for each } i \in I $$
 
-\paragraph{Randomized approximation for the MAX-SAT:} given a CNF, find a truth assignment to the logical variables that satisfy a maximum weight subset of formulae.\\
+\paragraph{Randomized approximation for the MAX-SAT:} Given a CNF, find a truth assignment to the logical variables that satisfy a maximum weight subset of formulae.\\
 
 Purely \textbf{random algorithm:} Assign to each variable $xj$ $(j = 1, \, ... \, , n)$
 \begin{itemize}
@@ -274,7 +274,7 @@ The total sum is equal to the weight of the satisfied clauses ($C$ contains all 
 
 \newpage
 
-Our \textbf{probability} is a number between zero and one and we need to \textbf{estimate it}.\\
+Our \textbf{probability} is a number between zero and one, we need to \textbf{estimate it}.\\
 Let $k_i$ be the number of literals of formula $i \in C$ and $k_{min} = \min_{i \in C} k_i$ (minimum number of literals among all the clauses)
 $$ Pr \left[\delta_i (x) = 1\right] = 1 - \left(\frac{1}{2}\right)^{k_i} \geq 1 - \left(\frac{1}{2}\right)^{k_{min}} \text{ for each } i \in C $$
 $$ \implies E \left[f_A (i, \omega)\right] \geq \sum_{i \in C} w_i \cdot \left[1 - \left(\frac{1}{2}\right)^{k_{min}}\right] = \left[1 - \left(\frac{1}{2}\right)^{k_{min}}\right] \sum_{i \in C} w_i $$
@@ -348,12 +348,12 @@ As not all instances can be tested, a benchmark sample must be defined.\\
 A meaningful \textbf{sample} must \textbf{represent different}
 \begin{itemize}
 	\item \textbf{sizes}, in particular for the analysis of the computational cost; size largely determines the complexity and possibly the quality of the solution
-	\item \textbf{structural features} (in the case of graphs: density, degree, diameter, ...; any type of index regarding a specific structure)
+	\item \textbf{structural features} (in the case of graphs: density, degree, diameter, \dots; any type of index regarding a specific structure)
 	\item \textbf{types}
 	\begin{itemize}
-		\item of \textbf{application}: logistics, telecommunications, production, ...
+		\item of \textbf{application}: logistics, telecommunications, production, \dots
 		\item of \textbf{generation}: realistic, artificial, transformations of other problems
-		\item of \textbf{probabilistic} distribution: uniform, normal, exponential, ...
+		\item of \textbf{probabilistic} distribution: uniform, normal, exponential, \dots
 	\end{itemize}
 	instances can come from different sources, affecting efficiency
 \end{itemize}
@@ -393,7 +393,7 @@ and \textbf{extract benchmark samples} from these classes.
 \end{itemize}
 Every detail about the instance must be specified to get the same results, even seemingly negligible details can matter in some instances (e.g. different compilers should provide the same result but may yield somewhat different performances).\\
 
-Reproducing results obtained by others is always extremely difficult, these are guidelines but there are limitations (reproducing the machine for example).\\
+Reproducing results obtained by others is always extremely difficult, these are guidelines, but there are limitations (reproducing the machine for example).\\
 
 \newpage
 
@@ -412,7 +412,7 @@ It can be justified to \textbf{neglect the computational} time when
 	\item comparing algorithms that mostly perform the same operations with \textbf{few different} ones that take a \textbf{negligible fraction of the time} (e.g., different initializations or perturbations)
 \end{itemize}
 
-\paragraph{A statistical model of algorithm performance:} the idea is modeling the execution of algorithm $A$ as if it was a random experiment
+\paragraph{A statistical model of algorithm performance:} The idea is modeling the execution of algorithm $A$ as if it was a random experiment
 \begin{itemize}
 	\item the whole set of \textbf{instances} $I$ is the sample space
 	\item the benchmark \textbf{subset} of instances $\overline{I} \subset I$ is the \textbf{sample}
@@ -442,7 +442,7 @@ This range yields a region estimate for the SQD diagram.\\
 \newpage 
 
 \subsubsection{Analysis of the computational time}
-\paragraph{The Run Time Distribution (RTD) diagram:} the RTD is the plot of the \textbf{distribution function} of $T_A (i )$ on $\overline{I}$ (time required on an instance $i$ on the given benchmark)
+\paragraph{The Run Time Distribution (RTD) diagram:} The RTD is the plot of the \textbf{distribution function} of $T_A (i )$ on $\overline{I}$ (time required on an instance $i$ on the given benchmark)
 $$ F_{T_A} (t) = Pr \left[T_A (i) \leq t \right] \text{ for each } t \in \mathbb{R} $$
 It gives the \textbf{probability} that the \textbf{execution time} is below a time $t$. \\
 
@@ -458,7 +458,7 @@ If all influential parameters are identified and fixed, the RTD diagram degenera
 
 The Run Time Distribution (RTD) diagram is
 \begin{itemize}
-	\item \textbf{monotone nondecreasing:} more instances are solved in longer times
+	\item \textbf{monotone non-decreasing:} more instances are solved in longer times
 	\item \textbf{step-wise and right-continuous:} the graph steps up at each $T (i )$
 	\item \textbf{equal to zero for $t < 0$:} no instance is solved in negative time
 	\item \textbf{equal to} $1$ \textbf{for} $t \geq \max_{i \in \overline{I}} T(i)$: all are solved within the longest time
@@ -481,7 +481,7 @@ In order to \textbf{build the diagram}:
 
 \newpage
 
-\paragraph{Scaling diagram:} this diagram describes the dependence of $T (i )$ on the size $n (i )$
+\paragraph{Scaling diagram:} This diagram describes the dependence of $T (i )$ on the size $n (i )$
 \begin{itemize}
 	\item \textbf{generate a sequence of values} of $n$ and a sample $\overline{I}_n$ for each value (generate a benchmark sample for each size)
 	\item \textbf{apply the algorithm} to each $I \in \overline{I}_n$ for all $n$ (all instances of each sub-benchmark for all the sizes)
@@ -530,7 +530,7 @@ $$ F_{\delta_A} (\alpha) = Pr \left[\delta_A (i) \leq \alpha\right] \text{ for e
 \end{center}
 It plots the probability that the relative difference is smaller than a value $\alpha$, for each possible value of $\alpha$. \\
 
-One axis is the frequency, the other is the relative difference, it basically answers the question "how many instances got this $\delta_A$ or less?". \\
+One axis is the frequency, the other is the relative difference, it basically answers the question of "how many instances got this $\delta_A$ or less?". \\
 
 \newpage
 
@@ -565,7 +565,7 @@ In order to \textbf{build the diagram}:
 
 \paragraph{Parametric SQD diagrams:} Given the theoretical and practical problems to build a \textbf{meaningful sample} often the \textbf{diagram is parameterized} with respect to
 \begin{itemize}
-	\item a \textbf{descriptive parameter of the instances} (size, density, ...)
+	\item a \textbf{descriptive parameter of the instances} (size, density, \dots)
 	\item a \textbf{parameter} of the \textbf{probability distribution assumed} for the \textbf{instances} (expected value or variance of the costs, ...)
 \end{itemize}
 \begin{center}
@@ -660,7 +660,7 @@ Let $\delta_A (i, t)$ be the \textbf{relative difference} reached by $A$ at time
 As a function of time $t$, $\delta_A (i, t)$ is
 \begin{itemize}
 	\item $+ \infty$ if $A$ has \textbf{not} yet \textbf{found} a feasible \textbf{solution} at time $t$
-	\item step-wise \textbf{monotone nonincreasing} (the solution doesn't get worse)
+	\item step-wise \textbf{monotone non-increasing} (the solution doesn't get worse)
 	\item \textbf{constant} after the regular \textbf{termination} ($t \geq T (i)$; after the termination of the algorithm the solution doesn't improve)
 \end{itemize}
 
@@ -689,7 +689,7 @@ The results of \textbf{multiple runs} ($\overline{\Omega}$) are usually \textbf{
 \newpage
 
 \subsection{Classification}
-The relation between solution quality and computational time allows to \textbf{classify the algorithms} into:
+The relation between solution quality and computational time allows \textbf{classifying the algorithms} into:
 \begin{itemize}
 	\item \textbf{complete:} for each instance $i \in I$, find the optimum in finite time
 	$$ \exists \overline{t}_i \in \mathbb{R}^+ : \, \delta_A (i, t) = 0 \text{ for each } t \geq \overline{t}, \, i \in I $$
@@ -701,14 +701,13 @@ The relation between solution quality and computational time allows to \textbf{c
 	
 	\item \textbf{essentially incomplete:} for some instances $i \in I$, find the optimum with probability strictly $< 1$ as $t \rightarrow + \infty$
 	$$ \exists i \in I: \, \lim_{t \rightarrow + \infty} Pr \left[\delta_A (i, t) = 0 \right] < 1 $$
-	(Most greedy algorithms, local search algorithms, ...) even given infinite time, some instances can't get to the exact solution. \\
+	(Most greedy algorithms, local search algorithms, \dots) even given infinite time, some instances can't get to the exact solution. \\
 \end{itemize}
 
 \newpage
 
 \subsubsection{Beyond the optimum, a generalization}
 An obvious generalization \textbf{replaces} the search for the \textbf{optimum} with that for a \textbf{given level of approximation}
-δA (I , t) = 0 → δA (I , t) ≤ α
 $$ \delta_A (i, t) = 0 \rightarrow \delta_A (i, t) \leq \alpha $$
 We're not searching for an exact solution, we're looking for a "good enough" solution, where the "good enough" is determined by $\alpha$.\\
 
@@ -817,7 +816,7 @@ Typical values for the significance level are $\overline{p} = 5\%$ or $\overline
 \newpage
 
 \subsubsection{Assumptions} 
-It is a \textbf{nonparametric} test, that is, it does \textbf{not} make \textbf{assumptions} on the \textbf{probability distribution} of the tested \textbf{values}.\\
+It is a \textbf{non-parametric} test, that is, it does \textbf{not} make \textbf{assumptions} on the \textbf{probability distribution} of the tested \textbf{values}.\\
 
 It is useful to evaluate the performance of heuristic algorithms, because the \textbf{distribution of the result} $f_A (i )$ is \textbf{unknown}. \\
 
@@ -825,7 +824,7 @@ It is based on the following \textbf{assumptions}:
 \begin{itemize}
 	\item \textbf{all data} are \textbf{measured} at least on an \textbf{ordinal scale} (the specific values do not matter, only their relative size, you just need a sequence of levels, we use numbers so it's obviously verified)
 	\item the two \textbf{data sets} are \textbf{matched} and \textbf{derive from the same population} (we apply $A_1$ and $A_2$ to the same instances, extracted from $I$, so it's always verified)
-	\item each \textbf{pair of values is extracted independently} from the others (the instances are generated independently from one another, not always satisfied)
+	\item each \textbf{pair of values is extracted independently} of the others (the instances are generated independently of one another, not always satisfied)
 \end{itemize}
 
 \newpage
@@ -848,7 +847,7 @@ Application of the Wilcoxon's test:
 	If the null hypothesis $H_0$ were true, the two sums should be equal.\\
 	Each positive is summed together, same with the negatives, if the algorithms are truly equivalent (as per the null hypothesis), these should be the same, i.e. $W^+ - W^-$ should be $0$. We're computing the sum of the ranks for the instances where the first algorithm is better than the second and vice versa.\\
 	
-	\item The \textbf{difference} $W^+ - W^-$ allows to \textbf{compute} the \textbf{value of} $p$: each of the $|\overline{I}|$ differences can be positive or negative: $2^{|\overline{I}|}$ outcomes; $p$ is the fraction with $|W^+ - W^-|$ equal or larger than the observed value.\\
+	\item The \textbf{difference} $W^+ - W^-$ allows \textbf{computing} the \textbf{value of} $p$: each of the $|\overline{I}|$ differences can be positive or negative: $2^{|\overline{I}|}$ outcomes; $p$ is the fraction with $|W^+ - W^-|$ equal or larger than the observed value.\\
 	
 	\item if $p < \overline{p}$, the \textbf{difference is significant} and
 	\begin{itemize}
@@ -862,14 +861,14 @@ Application of the Wilcoxon's test:
 \paragraph{Computation of the $p$-value:} The value of $p$ (distribution of probability) is usually
 \begin{itemize}
 	\item \textbf{computed explicitly} by enumeration when $|\overline{I}| < 20$; which possible cases give us each value?
-	\item \textbf{approximated} with a \textbf{normal distribution} when $|\overline{I}| \geq 20$; there's a lot of cases, it can be approximated
+	\item \textbf{approximated} with a \textbf{normal distribution} when $|\overline{I}| \geq 20$; there are a lot of cases, it can be approximated
 \end{itemize}
 \begin{center}
 	\includegraphics[width=\columnwidth]{img/pval1}
 \end{center}
 Of course, pre-computed tables also exist.\\
 
-We get the probability distribution and we observe the probability of the value we got, then we need to evaluate if it's reasonable or if it's a significant result. \\
+We get the probability distribution, and we observe the probability of the value we got, then we need to evaluate if it's reasonable or if it's a significant result. \\
 
 \newpage
 
@@ -887,7 +886,7 @@ If the sample includes instances of different kinds, two algorithms could be \te
 	\item classes of instances for which $A_2$ is better
 	\item classes of instances for which the two algorithms are equivalent
 \end{itemize}
-but multiplying questions means getting some wrong answers by chance (FWER = Family-Wise Error Rate). \\
+but multiplying questions means getting some wrong answers by chance (FWER $=$ Family-Wise Error Rate). \\
 
 What about testing $\delta_A (i)$ instead of $f_A (i )$? (Open question).\\
 

@@ -66,7 +66,7 @@ Computing the objective function can be complex (and exhausting).\\
 In the cases seen before: 
 \begin{itemize}
 	\item the KP has an \textbf{additive} function which sums values of a function defined on the ground set (each element only has its own value)
-	$$ \phi : \, B \rightarrow \mathbb{N} \text{ induces } f(x) \sum_{j \in x} \phi_j : \, X \rightarrow \mathbb{N} $$
+	$$ \phi : \, B \rightarrow \mathbb{N} \; \text{ induces } \; f(x) = \sum_{j \in x} \phi_j : \, X \rightarrow \mathbb{N} $$
 	the additive function is easy to recompute if the subset $x$ changes, just sum each element added and subtract each element removed.\\
 	
 	\item the MDP has a \textbf{quadratic} objective function (each point needs to have the distance to every other element). \\
@@ -123,7 +123,7 @@ $$ X = \left\{x \subseteq B : \, |x \cap B_t| = 1 \;\; \forall t \in T \right\}$
 
 The \textbf{objective} is to \textbf{minimize the maximum sum of time lengths} for each machine
 $$ \min_{x \in X} f(x) = \max_{m \in M} \sum_{t:(t,m) \in x} d_t $$
-this wants to minimize the maximum sum of duration for each machine in the solution; the final "value" (time spent) needs to be at a minimum and it is determined only by the longest-running machine.
+this wants to minimize the maximum sum of duration for each machine in the solution; the final "value" (time spent) needs to be at a minimum, and it is determined only by the longest-running machine.
 
 \newpage
 
@@ -137,7 +137,7 @@ The objective function wants to minimize the completion time, the value to compl
 
 \subsection*{Interlude 2: The objective function again}
 \addcontentsline{toc}{subsection}{Interlude 2: The objective function again}
-The \textbf{ground set} is \textbf{not} always a single set, in the last examples was a cartesian product of two sets. \\
+The \textbf{ground set} is \textbf{not} always a single set, in the last examples was a Cartesian product of two sets. \\
 
 The objective function for the BPP and PMSP is not additive and not trivial to compute. \\
 
@@ -155,7 +155,7 @@ The objective function is "flat", there are \textbf{several solutions} with the 
 
 \subsection{Logic function problems}
 \subsubsection{Max-SAT (satisfaction) problem}
-Given a \textit{CNF} (Conjunctive Normal Form), assign truth values to its logical variables so as to satisfy the \textbf{maximum weight subset of its logical clauses}. It consists of: 
+Given a \textit{CNF} (Conjunctive Normal Form), assign truth values to its logical variables to satisfy the \textbf{maximum weight subset of its logical clauses}. It consists of: 
 \begin{itemize}
 	\item a set $V$ of \textbf{logical variables} $x_j$ with values in $\mathbb{B} = \{0, 1\}$ (\textit{false}, \textit{true}); the variables taken into consideration, which can be true or false
 	\item a \textbf{literal} $l_j$ is a function consisting of an \textbf{affirmed or negated variable}
@@ -241,7 +241,7 @@ The first one is a solution, the second one is unfeasible.\\
 \addcontentsline{toc}{subsection}{Interlude 3: The feasibility test}
 Often heuristic algorithms require solving the problem "here is a subset of elements, \textbf{is it feasible?}" or in short "$x \in X$?". It's a decision problem.\\
 
-Sometimes is really easy (Max-SAT problem, just check that each variable appears exactly once), sometimes it's not as linear (SCP, you need the sum of each row, still easy but not as easy).\\
+Sometimes is really easy (Max-SAT problem, just check that each variable appears exactly once), sometimes it's not as linear (SCP, you need the sum of each row, still easy but not \textit{as easy}).\\
 
 The \textbf{feasibility test} requires to \textbf{compute from the solution} and test
 \begin{itemize}
@@ -258,7 +258,7 @@ The time required can be \textbf{different} if the test is performed
 \end{itemize}
 \nn
 
-Some modifications can be forbidden \textit{a priori} to avoid infeasibility (insertions and removals for MDP, PMSP, Max-SAT), while others require an \textit{a posteriori} test (exchanges). Some families of modification can be ruled out.\\
+Some modifications can be forbidden \textit{a priori} to avoid unfeasibility (insertions and removals for MDP, PMSP, Max-SAT), while others require an \textit{a posteriori} test (exchanges). Some families of modification can be ruled out.\\
 
 % End of L1P2
 
@@ -272,12 +272,12 @@ Given:
 	\item \textbf{columns} $j'$ e $j'' \in C$ \textbf{conflict} with each other when $a_{ij'} = a_{ij''} = 1$
 	\item a function $\phi : \, C \rightarrow \mathbb{N}$ provides the \textbf{value of each column}
 \end{itemize}
-Select a \textbf{subset} of \textbf{nonconflicting columns} of \textbf{maximum value}.\\
+Select a \textbf{subset} of \textbf{non-conflicting columns} of \textbf{maximum value}.\\
 There can't be two 1s in the same row of two chosen columns; the sum of all values in each row must be $\leq 1$.\\
 
 The \textbf{ground set} is the set of \textbf{columns}, $B = C$.\\
 
-The \textbf{feasible region} includes all \textbf{subsets} of \textbf{nonconflicting columns}
+The \textbf{feasible region} includes all \textbf{subsets} of \textbf{non-conflicting columns}
 $$ X = \left\{x \subseteq B: \, \sum_{j \in x} a_{ij} \leq 1 \; \forall i \in R \right\}$$
 
 The \textbf{objective} is to \textbf{maximize the total value} of the selected columns
@@ -296,7 +296,7 @@ The first one is a feasible solution, while the second one is not feasible (the 
 \newpage
 
 \subsubsection{Set Partitioning (SPP)}
-Given a binary matrix and a cost function defined on its columns, select a \textbf{minimum cost} subset of \textbf{nonconflicting columns covering all rows}. It consists of:
+Given a binary matrix and a cost function defined on its columns, select a \textbf{minimum cost} subset of \textbf{non-conflicting columns covering all rows}. It consists of:
 \begin{itemize}
 	\item a \textbf{binary matrix} $A \in \mathbb{B}^{m,n}$ with a \textbf{set of rows} $R$ and a \textbf{set of
 		columns} $C$
@@ -326,7 +326,7 @@ The first one is a feasible solution, while the second one is not feasible (the 
 
 \subsection*{Interlude 4: The search for feasible solutions}
 \addcontentsline{toc}{subsection}{Interlude 4: The search for feasible solutions}
-Heuristic algorithms often require to solve the problem "\textbf{Find a feasible solution} $x \in X$", it's a search problem. \\
+Heuristic algorithms often require solving the problem "\textbf{Find a feasible solution} $x \in X$", it's a search problem. \\
 
 \textbf{Depending} on the problem, the solution can be \textbf{trivial}: 
 \begin{itemize}
@@ -359,13 +359,13 @@ The problem can be weighted by adding a weight function to each node instead of 
 The \textbf{ground set} is the \textbf{vertex set}, $B = V$.\\
 
 The \textbf{feasible region} includes \textbf{all vertex subsets} such that \textbf{all the edges} of the graph \textbf{are incident to them}
-$$ X = \left\{x \subseteq V : \, x \cap (i,j) \neq \emptyset \; \forall (i,j) \in E \right\}$$
+$$ X = \left\{x \subseteq V : \, x \cap (i,j) \neq \emptyset, \;\;\; \forall (i,j) \in E \right\}$$
 all the subsets of vertices such as the intersection between this and every possible pair of edges is not empty, i.e. there must be every pair of vertices in the solution.
 
 The \textbf{objective} is to \textbf{minimize} the \textbf{number of} selected \textbf{vertices}
 $$ \min_{x \in X} f(x) = |x| $$
 
-It becomes the sum of the weight of the vertices if we have a weight function $w$
+Alternatively, the sum of the weight of the vertices, if a weight function $w$ is present
 $$ \min_{x \in X} f(x) = \sum_{j \in x} w_j $$
 
 \newpage
@@ -391,7 +391,7 @@ The problem consists in finding the subset of adjacent vertices (a clique, each 
 The \textbf{ground set} is the \textbf{vertex set}, $B = V$.\\
 
 The \textbf{feasible region} includes all \textbf{subsets of pairwise adjacent vertices}
-$$ X = \left\{x \subseteq V : \, (i,j) \in E \; \forall i \in x, \, \forall j \in X \setminus \left\{i\right\}\right\}$$
+$$ X = \left\{x \subseteq V : \, (i,j) \in E, \;\; \forall i \in x, \;\; \forall j \in X \setminus \left\{i\right\}\right\}$$
 for any pair of vertices belonging to the solution the pair itself belongs to the edge set.\\
 
 The \textbf{objective} is to \textbf{maximize} the \textbf{weight} of the selected vertices
@@ -418,7 +418,7 @@ The subset of not connected nodes with the maximum weight.\\
 The \textbf{ground set} is the \textbf{vertex set}, $B = V$.\\
 
 The \textbf{feasible region} includes the subsets of \textbf{pairwise nonadjacent vertices}
-$$ X = \left\{x \subseteq B : \, (i,j) \notin E \; \forall i \in x, \, \forall j \in x \setminus \left\{i\right\}\right\}$$
+$$ X = \left\{x \subseteq B : \, (i,j) \notin E, \;\; \forall i \in x, \;\; \forall j \in x \setminus \left\{i\right\}\right\}$$
 
 The \textbf{objective} is to \textbf{maximize the weight} of the selected vertices
 $$ \max_{x \in X} f(x) = \sum_{j \in x} w_j $$
@@ -473,8 +473,8 @@ The \textbf{BPP} and the \textbf{PMSP} are \textbf{equivalent}, but in a more so
 	\item the \textbf{tasks} correspond to the \textbf{objects}
 	\item the \textbf{machines} correspond to the \textbf{containers}, but
 	\begin{itemize}
-		\item BPP: minimise the number of containers, given the capacity
-		\item PMSP: given the number of machines, minimise the completion time
+		\item BPP: minimize the number of containers, given the capacity
+		\item PMSP: given the number of machines, minimize the completion time
 	\end{itemize}
 \end{itemize}
 Start from a \textbf{BPP instance}
@@ -509,12 +509,12 @@ select a \textbf{circuit} visiting \textbf{all the nodes} of the graph at \textb
 
 The \textbf{ground set} is the \textbf{arc set}, $B = A$.\\
 
-The \textbf{feasible region} includes the \textbf{circuits} that \textbf{visit all nodes} in the graph (hamiltonian circuits).\\
+The \textbf{feasible region} includes the \textbf{circuits} that \textbf{visit all nodes} in the graph (Hamiltonian circuits).\\
 
 How to determine whether a subset is a feasible solution? \\
 And a modification of a feasible solution? \\
 Can some modifications be ruled out? \\
-Finding an hamiltonian circuit is usually NP-hard, it's trivial only in the case of a connected graph. \\
+Finding a Hamiltonian circuit is usually $\np$-hard, it's trivial only in the case of a connected graph. \\
 
 The \textbf{objective} is to \textbf{minimize} the \textbf{total cost} of the selected arcs
 $$ \min_{x \in X} f(x) = \sum_{j \in x} c_j $$
@@ -535,7 +535,7 @@ Given
 	\item an \textbf{undirected graph} $G = (V , E )$ with a \textbf{root vertex} $r \in V$
 	\item a function $c : \, E \rightarrow \mathbb{N}$ that provides the \textbf{cost of each edge}
 	\item a function $w : \, V \rightarrow \mathbb{N}$ that provides the \textbf{weight of each vertex}
-	\item a number $W \in \mathbb{N}$ that is the \textbf{subtree appended to the root} (branch), i.e. capacity of each subtree
+	\item a number $W \in \mathbb{N}$ that is the \textbf{subtree appended to the root} (branch), i.e., capacity of each subtree
 \end{itemize}
 select a \textbf{spanning tree} of \textbf{minimum cost} such that each \textbf{branch respects the capacity}.\\
 Find a spanning tree starting from a root node $r$, each branch must be under the limit weight (not too many vertices, must be under $W$).\\
@@ -582,12 +582,12 @@ What if we described the problem in terms of vertex subsets?
 
 \newpage
 
-\paragraph{Alternative description:} define a set of \textbf{subtrees} $T$ (as in the containers in the BPP), one for each vertex in $V \setminus \left\{r\right\}$: some can be empty.\\
+\paragraph{Alternative description:} Define a set of \textbf{subtrees} $T$ (as in the containers in the BPP), one for each vertex in $V \setminus \left\{r\right\}$: some can be empty.\\
 
 The \textbf{ground set} is the \textbf{set of the (vertex,branch) pairs}, $B = V \times T$.\\
 
 The \textbf{feasible region} includes \textbf{all partitions of the vertices into connected subsets} (visit, trivial on complete graphs) \textbf{of weight} $\leq W$ (as in the BPP)
-$$ X = \left\{x \subseteq B : \, |x \cap B_v| = 1 \; \forall v \in V \setminus \left\{r\right\}, \, \sum_{(i,j)\in B^t} w_i \leq W \; \forall t \in T, \; ... \; \right\}$$
+$$ X = \left\{x \subseteq B : \, |x \cap B_v| = 1, \;\; \forall v \in V \setminus \left\{r\right\}, \, \sum_{(i,j)\in B^t} w_i \leq W \; \forall t \in T, \; ... \; \right\}$$
 with $B_v = {(i, j) \in B : \, i = v }$, $B^t = {(i, j) \in B : j = t}$.\\
 
 The \textbf{objective} is to \textbf{minimize} the \textbf{sum of the costs of the branches} spanning each subset of vertices and appending it to the root.\\
@@ -597,11 +597,11 @@ The previously considered solutions now have a \textbf{different representation}
 \begin{center}
 	\includegraphics[width=0.9\columnwidth]{img/CSTP2}
 \end{center}
-The feasibility test only requires to sum the weights, computing the objective requires to solve a MST problem.
+The feasibility test only requires summing the weights, computing the objective requires solving a MST problem.
 
 \newpage
 
-\paragraph{New cost of operations:} the objective function is
+\paragraph{New cost of operations:} The objective function is
 \begin{itemize}
 	\item \textbf{slow to evaluate:} compute a MST for each subset
 	\item \textbf{slow to update:} recompute the MST for each modified subset
