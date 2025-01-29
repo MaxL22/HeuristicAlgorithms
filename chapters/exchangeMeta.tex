@@ -41,7 +41,7 @@ or "\textbf{relative}" to the \textbf{profile of} $f^\ast$
 	
 	\item A given \textbf{execution time after the last improvement}.\\
 	
-	\item A given \textbf{minimum value of the ratio between improvement} of the objective and \textbf{number of explorations/repetitions} or \textbf{execution time} (e.g.: $f^\ast$ improves less than $1\%$ in the last $1000$ explorations).\\
+	\item A given \textbf{minimum value of the ratio between improvement} of the objective and \textbf{number of explorations/repetitions} or \textbf{execution time} (e.g., $f^\ast$ improves less than $1\%$ in the last $1000$ explorations).\\
 \end{enumerate}
 
 \textbf{Fair comparisons} require \textbf{absolute conditions} (give both the same time/number of exploration).\\
@@ -419,7 +419,7 @@ The value of $s_{max}$ must be
 	
 	\item \textbf{Small enough} to \textbf{avoid reaching useless regions} of the solution space.\\
 \end{itemize}
-Example: the diameter of the search space for the basic neighborhood: $min (k, n - k)$ for the MDP; $n$ for the TSP and MAX-SAT, etc.\\
+Example: the diameter of the search space for the basic neighborhood: $\min (k, n - k)$ for the MDP; $n$ for the TSP and MAX-SAT, etc.\\
 
 The value of $\delta s$ must be
 \begin{itemize}
@@ -434,10 +434,10 @@ In general, one sets $\delta s = 1$, unless $s_{max} - s_{min}$ is too large.\\
 
 \subsubsection{Skewed VNS}
 In order to \textbf{favor diversification}, it is possible to \textbf{accept} $x'$ \textbf{when}
-$$ f (x') < f (x^\ast) + \alpha d_H (x', x^\ast) $$
+$$ f (x') < f (x^\ast) + \alpha d_{\mathcal{H}} (x', x^\ast) $$
 where
 \begin{itemize}
-	\item $d_H (x', x^\ast)$ is the \textbf{Hamming distance} between $x'$ and $x^\ast$
+	\item $d_{\mathcal{H}} (x', x^\ast)$ is the \textbf{Hamming distance} between $x'$ and $x^\ast$
 	
 	\item $\alpha > 0$ is a \textbf{suitable parameter}
 \end{itemize}
@@ -947,7 +947,7 @@ For fixed temperature $T$, the \textbf{transition probabilities are stationary}:
 If the search graph for neighborhood $N$ is connected, the \textbf{probability to reach each state is} $> 0$: it is an \textbf{irreducible Markov chain}.\\
 
 Under these assumptions (irreducible and homogeneous Markov chain), \textbf{the state probability converges to a stationary distribution independent of the starting state}. \\
-For any starting state, the probability of being in a given solution after a long time tends to assume a stationary distribution, i.e. the behavior of the algorithm is not influenced by the starting solution.\\
+For any starting state, the probability of being in a given solution after a long time tends to assume a stationary distribution, i.e., the behavior of the algorithm is not influenced by the starting solution.\\
 
 The stationary distribution favors "good" solutions with the same law imposed by thermodynamics on physical systems at thermal equilibrium
 $$ \pi_T (x) = \frac{ e^{\frac{-f(x)}{T}} }{ \sum_{x \in X} e^{\frac{-f(x)}{T}} } \text{ for each } x \in X $$

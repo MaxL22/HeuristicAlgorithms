@@ -65,7 +65,7 @@ Scatter Search (SS), proposed by Glover (1977), proceeds as follows
 	\item build a \textbf{reference set} $R = B \cup D$ where
 	\begin{itemize}
 		\item \textbf{subset} $B$ includes the \textbf{best known solutions}
-		\item \textbf{subset} $D$ includes the \textbf{"farthest" solutions} from $B$ and each other (this requires a distance definition, e.g. the Hamming distance)
+		\item \textbf{subset} $D$ includes the \textbf{"farthest" solutions} from $B$ and each other (this requires a distance definition, e.g., the Hamming distance)
 	\end{itemize}
 	\nn
 	
@@ -77,7 +77,7 @@ Scatter Search (SS), proposed by Glover (1977), proceeds as follows
 		
 		\item if $z' \notin B$ and $B$ contains a \textbf{worse solution}, \textbf{replace it} with $z'$ (we want no duplicates in the reference set); i.e., if it's better than any solution in our set of best solutions replace it.
 		
-		\item if $z' \notin D$ and $D$ includes a \textbf{closer solution}, \textbf{replace it} with $z'$ (we want no duplicates in the reference set); i.e. if it's further away than any solution in our set of farthest solutions replace it.
+		\item if $z' \notin D$ and $D$ includes a \textbf{closer solution}, \textbf{replace it} with $z'$ (we want no duplicates in the reference set); i.e., if it's further away than any solution in our set of farthest solutions replace it.
 	\end{itemize}
 	\nn
 	
