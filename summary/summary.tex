@@ -105,7 +105,7 @@
 		\item Sum all positive ranks ($W^+$), as well as the negative ($W^-$)
 		\item Calculate the probability that $|W^+ - W^-|$ is equal or larger than the observed value (usually not required during exams)
 	\end{enumerate}
-	If the probability is low enough the difference is significant and if $W^+ > W^-$ then the first algorithm is better than the second, or vice versa.\\
+	If the probability is low enough the difference is significant and if $W^+ > W^-$ then the first algorithm is better than the second, or vice versa. It does not make assumptions regarding the probability distribution of the instances, but it is assumed that the benchmark for the algorithms is done on the same population and the values are on an ordinal scale.\\
 	
 	\addcontentsline{toc}{section}{\protect\numberline{}Constructive Heuristics}
 	\section*{Constructive Heuristics}
@@ -121,9 +121,9 @@
 	\paragraph{Traveling Salesman Problem TSP:} Types of Heuristic: 
 	\begin{itemize}
 		\item \textbf{Nearest Neighbor:} from the last visited node to the nearest unvisited node;
-		\item \textbf{Cheapest Insertion:} removes an arc and adds two, including a new node, such that the total change is minimum;
-		\item \textbf{Nearest Insertion:} look for the node closest to the circuit (minimum distance from another node in the circuit) and find the best way to include it (which arc do I remove to include it? Use the one that minimizes total weight);
-		\item \textbf{Farthest Insertion:} search for the node farthest from the circuit and connect it in the best way possible.\\
+		\item \textbf{Cheapest Insertion:} removes an arc and adds two, including a new node, such that the total change is minimum; For every arc you can break try and add each node.
+		\item \textbf{Nearest Insertion:} look for the node closest to the circuit (minimum distance from another node in the circuit) and find the best way to include it (which arc do I remove to include it? Use the one that minimizes total weight); Find the node closest to another node in the circuit and in a second phase try all the ways that node can be included, i.e., try breaking every arc.
+		\item \textbf{Farthest Insertion:} search for the node farthest from the circuit and connect it in the best way possible. Same as last one, only the first phase changes.\\
 	\end{itemize}
 	
 	\paragraph{Greedoids and Matroids:} Assuming that the objective function is additive, and the solutions are bases (maximal subsets, can't add any more stuff) of the search space. A greedy algorithm is possible for a problem (ground set $B$ and search space $\mathcal{F} \subseteq 2^B$) which is a \textbf{greedoid}, i.e., for which the following hold: 
